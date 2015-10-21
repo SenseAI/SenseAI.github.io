@@ -660,22 +660,6 @@ form {
   color: #4db848;
 }
 
-#main-content h4 {
-  margin-bottom: 8px;
-  font-family: 'Gotham', Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  font-weight: bold;
-  color: #474747;
-  text-indent: 3px;
-}
-
-h4:before {
-  padding-right: 0.3em;
-  margin-left: -2.8em;
-  content: "////";
-  color: #9ddcff;
-}
-
 #main-content h5 {
   margin-bottom: 8px;
   font-family: 'Gotham', Helvetica, Arial, sans-serif;
@@ -877,4 +861,3 @@ footer a:hover {
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) { }
-
