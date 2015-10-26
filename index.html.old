@@ -13,10 +13,20 @@ title: coding with spice
   <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Example
 </h4>
 
-{% highlight ruby %}
-def foo
-  bar = Sting.new("guy", 'lll')
-  puts bar
-end
+{% highlight python %}
+url = '{}/device/compat'.format(base_url)
+params = { 'onlyTempV2' : 'yes' }
+
+r = requests.get(url, params=params)
+
+if not r.status_code==200:
+	raise Exception('an error occurred')
+
+devices = r.json()['message']['devices']
+
+print 'Supported Devices'
+
+for device in devices:
+	print '\t' + device['name'] + ' ' + device['osVersion']
 {% endhighlight %}
 
