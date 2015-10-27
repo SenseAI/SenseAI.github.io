@@ -293,7 +293,8 @@ example response message:
 ```
 
 #### Example 1
-##### Get Most Recent Data
+
+Get Most Recent Data
 
 ```python
 url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
@@ -323,7 +324,8 @@ outputs:
 ```
 
 #### Example 2
-##### Page Through All Data
+
+Page Through All Data
 
 ```python
 url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
@@ -332,7 +334,7 @@ params = {}
 
 while True:
 
-	r = requests.get('http://senseai-staging.com/api/v2/user/_/application/'+ api_key + '/environment/' + environment_id + '/data', auth = (username,password), params=params )
+	r = requests.get(url, auth = (username,password), params=params )
 	
 	if not r.status_code == 200:
 		raise Exception('an error occured')
@@ -350,7 +352,8 @@ while True:
 ```
 
 #### Example 3
-##### Poll For Data
+
+Poll For Data
 
 ```python
 
@@ -361,7 +364,7 @@ while True:
 
 	while True:
 
-		r = requests.get('http://senseai-staging.com/api/v2/user/_/application/'+ api_key + '/environment/' + environment_id + '/data', auth = (username,password), params=params )
+		r = requests.get(url, auth = (username,password), params=params )
 
 		if not r.status_code == 200:
 			raise Exception('an error occured')
@@ -378,4 +381,53 @@ while True:
 
 
 		time.sleep(60*15) # pause 15 minutes and poll again
+```
+
+### Get Application Info
+
+#### URL
+
+```
+GET https://senseai.io/api/v2/user/:user_id/application/:application_id
+```
+
+#### Response
+
+example response message
+
+```json
+{
+    "application": {
+      "name": "Foo",
+      "api_key": "a673b59c13f703a461bfd3b4e7244302",
+      "user_id": "f507b1fa6bb4916b555816e89e7cea03",
+      "configuration": {
+        "master_switch": true,
+        "collection_rate": 20,
+        "post_diagnostic_data": false
+      },
+    }
+ }
+ ```
+
+### Change Application-Level Remote Configuration
+
+Certain SDK parameters can be adjusted in the field, this should be done using the following:
+
+#### URL
+
+```
+PUT https://senseai.io/api/v2/user/:user_id/application/:application_id/configure
+```
+
+#### Request Body
+
+example request body
+
+```
+{
+	"master_switch": true,
+	"collection_rate": 20,
+	"post_diagnostic_data": false
+}
 ```
