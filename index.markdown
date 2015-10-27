@@ -408,13 +408,14 @@ example response message
       },
     }
  }
- ```
+```
 
 ### Change Application-Level Remote Configuration
 
 Certain SDK parameters can be adjusted in the field, this should be done using the following:
 
 #### URL
+
 
 ```
 PUT https://senseai.io/api/v2/user/:user_id/application/:application_id/configure
