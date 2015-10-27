@@ -1,11 +1,110 @@
 ---
 layout: default
-title: coding with spice
+title: API Documentation
 ---
 
 # API Documentation
 
-## Device Compatibility List
+## General
+
+### Conventions
+
+#### Authentication
+
+Where required, Basic Auth is used for user/developer level api access.
+
+#### Time
+
+Where timestamps are required either an ISO-8601 date string or a milliseconds-since-epoch(UTC), can be used interchangeably
+
+### Documentation Code Examples
+
+Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:
+
+```python
+import requests
+import time
+import datetime
+```
+
+We use [requests](http://docs.python-requests.org/en/latest/) for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.
+
+### Resource Descriptors
+
+It is useful to too look at how SenseAI's backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:
+
+**users** *have* **applications** : a user who is a developer can create applications(which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id
+
+**application** *have* **environments** : for each application, each device which uses an instance of the SDK is referred to as an environment, this environment tracks and identifies the mobile devices
+
+**user** *have* **environments** : users can link environments to their account through a pin challenge, this is used for individual app users to view their own data from the usage of senseAI APIs
+
+**environments** *have* **data** : each environment generates timestamped data
+
+These relationships create the following possible resource descriptors:
+
+`/user/:user_id/`
+`/user/:user_id/environment/:environment_id/`
+`/user/:user_id/environment/:environment_id/data`
+`/user/:user_id/environments`
+`/user/:user_id/application/:application_id/`
+`/user/:user_id/applications`
+`/user/:user_id/application/:application_id/environment/:environment_id`
+`/user/:user_id/application/:application_id/environment/:environment_id/data`
+`/user/:user_id/application/:application_id/environments`
+
+### Response Envelope
+
+All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for `GET /user/_` is seen below.
+
+#### Example Response
+
+```json
+{
+  "links": {
+    "self": "https://senseai-staging.com/api/v2/user/_/"
+  },
+  "status": {
+    "code": 200,
+    "text": "OK"
+  },
+  "error": null,
+  "message": {
+    "user": {
+      "id": "f507b1fa6bb4916b555816e89e7cea03",
+      "email": "foo@bar.com",
+      "roles": [
+        "user",
+        "developer:basic"
+      ],
+      "unit_preference": "imperial",
+      "created": 1432655398966,
+    }
+  }
+}
+```
+
+#### Response Envelope Keys
+
+| **key**     |  **description**                                                       |
+|-------------|------------------------------------------------------------------------|
+| links.self  | a canonical version of the resource being accessed                     |
+| links.next  | if the resource has multiple parts, the link to the next part          |
+| status.code | same as the http response status code                                  |
+| status.text | the description of the http response status code                       |
+| error       | if an error occurred, a description of that error                      |
+| message     | the payload of the resource accessed (typically this is what you want) |
+
+### Pagination
+
+For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: `limit` determines the number of items returned at a time, `offset` is the id of the last item obtained by the caller.  If the `links.next` field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.
+
+
+## API Routes
+
+### List Device Compatibility
+
+Get a list of SDK compatible devices, ones for which software sensors have been calibrated.
 
 #### URL
 
@@ -64,7 +163,9 @@ Supported Devices
 ```
 
 
-## List Active Environments (Device Clients)
+### List Environments for an Application
+
+List the environments registered with an api_key.  This requires pagination since this list can be quite large depending on the distribution of an app using sdk.
 
 #### URL
 
@@ -94,33 +195,49 @@ example response message
 ]
 ```
 
-#### Example Code
+#### Example
 
 ```python
+
 url = '{}/api/v2/user/_/application/{}/environments'.format(base_url,api_key)
 
-r = requests.get(url,auth = (username,password))
+environment_ids = []
 
-if not r.status_code==200:
-	raise Exception('an error occured')
+while True:
 
-environments = r.json()['message']['environments']
+	r = requests.get(url,auth = (username,password))
 
-for environment in environments:
-	print str(environment['id']) + '\t' + str(environment['commercial_name']) + '\t' + str(environment['model'])
+	if not r.status_code==200:
+		raise Exception(r.status_code)
+
+	body = r.json()
+
+	environment_ids += [ e['id'] for e in body['message']['environments'] ]
+
+	if 'next' in body['links']:
+		url = body['links']['next']
+	else:
+		break
+
+for e_id in environment_ids:
+	print e_id
+
 ```
 
 outputs:
 
 ```
-63d41b25c634c6aef3852d3ecd03879e.DF5310D424EC16A00968A1EEEECF0004	Samsung Galaxy S3 Mini	goldenvess3g
-63d41b25c634c6aef3852d3ecd03879e.E31487BC32B59A97C5CF0BA8668C42DF	Samsung Galaxy S5	kltevzw
-63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455	Samsung Galaxy S4	jflte
-63d41b25c634c6aef3852d3ecd03879e.EAD355A4A9281EEA4B8B4440BC913064	Samsung Galaxy S3	d2vzw
-
+63d41b25c634c6aef3852d3ecd03879e.0107D0DF2157D7EC4552C1B0D6A691BF
+63d41b25c634c6aef3852d3ecd03879e.117D788E7A5A61DD32BBF4619F73AFA5
+63d41b25c634c6aef3852d3ecd03879e.2C49FD6AB5C58975961B18E773097646
+63d41b25c634c6aef3852d3ecd03879e.8E3B20F445235E6DB92C132D5408B6E4
+63d41b25c634c6aef3852d3ecd03879e.9383AB36613529BE35CB2F818C3049B5
+63d41b25c634c6aef3852d3ecd03879e.96BD8335CDC067E1B5461EDAA270672B
+63d41b25c634c6aef3852d3ecd03879e.A5BADB55D70CFA1D7B33A34F99AD44DD
+...
 ```
 
-## Query Data
+### Query Data from an Environment in an Application
 
 #### URL
 
@@ -175,7 +292,8 @@ example response message:
 ]
 ```
 
-#### Example Code
+#### Example 1
+##### Get Most Recent Data
 
 ```python
 url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
@@ -185,37 +303,79 @@ r = requests.get(url, auth=(username,password) )
 if not r.status_code==200:
 	raise Exception('an error occurred')
 
-dataCollection = r.json()['message']['data']
-
-for data in dataCollection:
-	print data['time'] + ' ' + str(data['derived_sensors']['temperature']['value'])	
+for data in r.json()['message']['data']:
+	print data['time'] + '\t\t' + str(data['derived_sensors']['temperature']['value'])	
 ```
 
 outputs:
 
 ```
-2015-10-26T23:03:27.951Z 15.751167806
-2015-10-26T23:03:17.451Z 15.742417806
-2015-10-26T23:03:06.965Z 15.733667806
-2015-10-26T23:02:56.457Z 15.724917806
-2015-10-26T23:02:45.956Z 15.716167806
-2015-10-26T23:02:35.455Z 15.707417806
-2015-10-26T23:02:24.955Z 15.7003344727
-2015-10-26T23:02:14.451Z 15.698667806
-2015-10-26T23:02:03.956Z 15.693667806
-2015-10-26T23:01:53.458Z 15.684917806
-2015-10-26T23:01:42.951Z 15.676167806
-2015-10-26T23:01:32.481Z 15.667417806
-2015-10-26T23:01:21.951Z 15.658667806
-2015-10-26T23:01:11.450Z 15.649917806
-2015-10-26T23:01:00.959Z 15.641167806
-2015-10-26T23:00:50.460Z 15.632417806
-2015-10-26T23:00:39.938Z 15.623667806
-2015-10-26T23:00:29.450Z 15.614917806
-2015-10-26T23:00:18.943Z 15.606167806
-2015-10-26T23:00:08.432Z 15.5995011393
+2015-10-27T00:11:55.922Z		24.3639510091
+2015-10-27T00:11:45.426Z		24.5896988932
+2015-10-27T00:11:34.938Z		24.4411124674
+2015-10-27T00:11:24.438Z		24.2773323568
+2015-10-27T00:11:13.933Z		24.4989135742
+2015-10-27T00:11:03.426Z		24.3469091797
+2015-10-27T00:10:52.928Z		24.5173982747
+2015-10-27T00:10:42.438Z		24.3765844727
+2015-10-27T00:10:31.935Z		24.5652490234
 
 ```
 
+#### Example 2
+##### Page Through All Data
+
+```python
+url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+
+params = {}
+
+while True:
+
+	r = requests.get('http://senseai-staging.com/api/v2/user/_/application/'+ api_key + '/environment/' + environment_id + '/data', auth = (username,password), params=params )
+	
+	if not r.status_code == 200:
+		raise Exception('an error occured')
+
+	dataCollection = r.json()['message']['data']
+
+	if len(dataCollection) == 0:
+		break
+
+	for data in dataCollection:
+		print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+
+	params['end'] = data['time']
+
+```
+
+#### Example 3
+##### Poll For Data
+
+```python
+
+	url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+
+	params = {"order": "ascending",
+	          "start": datetime.datetime.utcnow().isoformat() }
+
+	while True:
+
+		r = requests.get('http://senseai-staging.com/api/v2/user/_/application/'+ api_key + '/environment/' + environment_id + '/data', auth = (username,password), params=params )
+
+		if not r.status_code == 200:
+			raise Exception('an error occured')
+
+		dataCollection = r.json()['message']['data']
+
+		for data in dataCollection:
+
+			print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
 
 
+		if len(dataCollection) > 0:
+			params['start'] = data['time']
+
+
+		time.sleep(60*15) # pause 15 minutes and poll again
+```

@@ -31,7 +31,127 @@
         <section id="main-content">
           <h1 id="api-documentation">API Documentation</h1>
 
-<h2 id="device-compatibility-list">Device Compatibility List</h2>
+<h2 id="general">General</h2>
+
+<h3 id="conventions">Conventions</h3>
+
+<h4 id="authentication">Authentication</h4>
+
+<p>Where required, Basic Auth is used for user/developer level api access.</p>
+
+<h4 id="time">Time</h4>
+
+<p>Where timestamps are required either an ISO-8601 date string or a milliseconds-since-epoch(UTC), can be used interchangeably</p>
+
+<h3 id="documentation-code-examples">Documentation Code Examples</h3>
+
+<p>Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
+
+<pre><code class="language-python">import requests
+import time
+import datetime
+</code></pre>
+
+<p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.</p>
+
+<h3 id="resource-descriptors">Resource Descriptors</h3>
+
+<p>It is useful to too look at how SenseAI’s backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:</p>
+
+<p><strong>users</strong> <em>have</em> <strong>applications</strong> : a user who is a developer can create applications(which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id</p>
+
+<p><strong>application</strong> <em>have</em> <strong>environments</strong> : for each application, each device which uses an instance of the SDK is referred to as an environment, this environment tracks and identifies the mobile devices</p>
+
+<p><strong>user</strong> <em>have</em> <strong>environments</strong> : users can link environments to their account through a pin challenge, this is used for individual app users to view their own data from the usage of senseAI APIs</p>
+
+<p><strong>environments</strong> <em>have</em> <strong>data</strong> : each environment generates timestamped data</p>
+
+<p>These relationships create the following possible resource descriptors:</p>
+
+<p><code>/user/:user_id/</code><br />
+<code>/user/:user_id/environment/:environment_id/</code><br />
+<code>/user/:user_id/environment/:environment_id/data</code><br />
+<code>/user/:user_id/environments</code><br />
+<code>/user/:user_id/application/:application_id/</code><br />
+<code>/user/:user_id/applications</code><br />
+<code>/user/:user_id/application/:application_id/environment/:environment_id</code><br />
+<code>/user/:user_id/application/:application_id/environment/:environment_id/data</code><br />
+<code>/user/:user_id/application/:application_id/environments</code></p>
+
+<h3 id="response-envelope">Response Envelope</h3>
+
+<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for <code>GET /user/_</code> is seen below.</p>
+
+<h4 id="example-response">Example Response</h4>
+
+<pre><code class="language-json">{
+  "links": {
+    "self": "https://senseai-staging.com/api/v2/user/_/"
+  },
+  "status": {
+    "code": 200,
+    "text": "OK"
+  },
+  "error": null,
+  "message": {
+    "user": {
+      "id": "f507b1fa6bb4916b555816e89e7cea03",
+      "email": "foo@bar.com",
+      "roles": [
+        "user",
+        "developer:basic"
+      ],
+      "unit_preference": "imperial",
+      "created": 1432655398966,
+    }
+  }
+}
+</code></pre>
+
+<h4 id="response-envelope-keys">Response Envelope Keys</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>key</strong></th>
+      <th><strong>description</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>links.self</td>
+      <td>a canonical version of the resource being accessed</td>
+    </tr>
+    <tr>
+      <td>links.next</td>
+      <td>if the resource has multiple parts, the link to the next part</td>
+    </tr>
+    <tr>
+      <td>status.code</td>
+      <td>same as the http response status code</td>
+    </tr>
+    <tr>
+      <td>status.text</td>
+      <td>the description of the http response status code</td>
+    </tr>
+    <tr>
+      <td>error</td>
+      <td>if an error occurred, a description of that error</td>
+    </tr>
+    <tr>
+      <td>message</td>
+      <td>the payload of the resource accessed (typically this is what you want)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="pagination">Pagination</h3>
+
+<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code>limit</code> determines the number of items returned at a time, <code>offset</code> is the id of the last item obtained by the caller.  If the <code>links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.</p>
+
+<h4 id="example-code-for-pagination">Example Code For Pagination</h4>
+
+<h2 id="list-device-compatibility">List Device Compatibility</h2>
 
 <h4 id="url">URL</h4>
 
@@ -123,7 +243,7 @@ for device in devices:
 ]
 </code></pre>
 
-<h4 id="example-code-1">Example Code</h4>
+<h4 id="example">Example</h4>
 
 <pre><code class="language-python">url = '{}/api/v2/user/_/application/{}/environments'.format(base_url,api_key)
 
@@ -140,12 +260,12 @@ for environment in environments:
 
 <p>outputs:</p>
 
-<pre><code>63d41b25c634c6aef3852d3ecd03879e.DF5310D424EC16A00968A1EEEECF0004	Samsung Galaxy S3 Mini	goldenvess3g
-63d41b25c634c6aef3852d3ecd03879e.E31487BC32B59A97C5CF0BA8668C42DF	Samsung Galaxy S5	kltevzw
-63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455	Samsung Galaxy S4	jflte
-63d41b25c634c6aef3852d3ecd03879e.EAD355A4A9281EEA4B8B4440BC913064	Samsung Galaxy S3	d2vzw
-
-</code></pre>
+<blockquote>
+  <p>63d41b25c634c6aef3852d3ecd03879e.DF5310D424EC16A00968A1EEEECF0004	Samsung Galaxy S3 Mini	goldenvess3g<br />
+63d41b25c634c6aef3852d3ecd03879e.E31487BC32B59A97C5CF0BA8668C42DF	Samsung Galaxy S5	kltevzw<br />
+63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455	Samsung Galaxy S4	jflte<br />
+63d41b25c634c6aef3852d3ecd03879e.EAD355A4A9281EEA4B8B4440BC913064	Samsung Galaxy S3	d2vzw</p>
+</blockquote>
 
 <h2 id="query-data">Query Data</h2>
 
@@ -220,7 +340,8 @@ for environment in environments:
 ]
 </code></pre>
 
-<h4 id="example-code-2">Example Code</h4>
+<h4 id="example-1">Example 1</h4>
+<p>##### Get Most Recent Data</p>
 
 <pre><code class="language-python">url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
 
@@ -260,6 +381,61 @@ for data in dataCollection:
 
 </code></pre>
 
+<h4 id="example-2">Example 2</h4>
+<p>##### Page Through All Data</p>
+
+<pre><code class="language-python">url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+
+params = {}
+
+while True:
+
+	r = requests.get('http://senseai-staging.com/api/v2/user/_/application/'+ api_key + '/environment/' + environment_id + '/data', auth = (username,password), params=params )
+	
+	if not r.status_code == 200:
+		raise Exception('an error occured')
+
+	dataCollection = r.json()['message']['data']
+
+	if len(dataCollection) == 0:
+		break
+
+	for data in dataCollection:
+		print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+
+	params['end'] = data['time']
+
+</code></pre>
+
+<h4 id="example-3">Example 3</h4>
+<p>##### Poll For Data</p>
+
+<pre><code class="language-python">
+	url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+
+	params = {"order": "ascending",
+	          "start": datetime.datetime.utcnow().isoformat() }
+
+	while True:
+
+		r = requests.get('http://senseai-staging.com/api/v2/user/_/application/'+ api_key + '/environment/' + environment_id + '/data', auth = (username,password), params=params )
+
+		if not r.status_code == 200:
+			raise Exception('an error occured')
+
+		dataCollection = r.json()['message']['data']
+
+		for data in dataCollection:
+
+			print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+
+
+		if len(dataCollection) &gt; 0:
+			params['start'] = data['time']
+
+
+		time.sleep(60*5)
+</code></pre>
 
         </section>
 
