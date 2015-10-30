@@ -21,11 +21,11 @@ Where timestamps are required either an ISO-8601 date string or a milliseconds-s
 
 Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:
 
-```python
+{% highlight python %}
 import requests
 import time
 import datetime
-```
+{% endhighlight %}
 
 We use [requests](http://docs.python-requests.org/en/latest/) for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.
 
@@ -59,7 +59,7 @@ All response bodies are JSON encoded.  All JSON responses have a standard respon
 
 #### Example Response
 
-```json
+{% highlight json %}
 {
   "links": {
     "self": "https://senseai-staging.com/api/v2/user/_/"
@@ -82,7 +82,7 @@ All response bodies are JSON encoded.  All JSON responses have a standard respon
     }
   }
 }
-```
+{% endhighlight %}
 
 #### Response Envelope Keys
 
@@ -123,43 +123,44 @@ GET https://senseai.io/api/v2/device/compat
 
 example response message
 
-```json
+{% highlight json %}
 [
-	{
-		"id":"23bb76f0-482b-11e5-a230-95b571d65c97",
-		"name":"OnePlus One",
-		"osVersion":"<5.0.0",
-	}, ...
+  {
+    "id":"23bb76f0-482b-11e5-a230-95b571d65c97",
+    "name":"OnePlus One",
+    "osVersion":"<5.0.0",
+  },
+  ...
 ]
-```
+{% endhighlight %}
 
 #### Example Code
 
-```python
+{% highlight python %}
 url = '{}/device/compat'.format(base_url)
 params = { 'onlyTempV2' : 'yes' }
 
 r = requests.get(url, params=params)
 
 if not r.status_code==200:
-	raise Exception('an error occurred')
+  raise Exception('an error occurred')
 
 devices = r.json()['message']['devices']
 
 print 'Supported Devices'
 
 for device in devices:
-	print '\t' + device['name'] + ' ' + device['osVersion']
-```
+  print '\t' + device['name'] + ' ' + device['osVersion']
+{% endhighlight %}
 
 outputs:
 
 ```
 Supported Devices
-	Samsung Galaxy S5 4.4.2
-	Samsung Galaxy S5 >=5.0
-	Samsung Galaxy S5 4.4.4
-	Samsung Galaxy S4  *
+  Samsung Galaxy S5 4.4.2
+  Samsung Galaxy S5 >=5.0
+  Samsung Galaxy S5 4.4.4
+  Samsung Galaxy S4  *
 ```
 
 
@@ -177,27 +178,27 @@ GET https://senseai.io/api/v2/user/:user_id/application/:application_id/environm
 
 example response message
 
-```json
+{% highlight json %}
 [
-	{
-	  "id": "63d41b25c634c6aef3852d3ecd03879e.FED2E1F1F1CE09667A891A55E1E7D1DA",
-	  "updated": 1445871149421,
-	  "model": "t0lte",
-	  "device_id": "2bb9f350-4203-11e5-b07c-71c60df92d2d",
-	  "sdk_version": "0.6.0",
-	  "api_key": "63d41b25c634c6aef3852d3ecd03879e",
-	  "client_id": "FED2E1F1F1CE09667A891A55E1E7D1DA",
-	  "timestamp": 1445867995878,
-	  "commercial_name": "Samsung Galaxy Note2",
-	  "os_version": "4.1.2"
-	},
-	...
+  {
+    "id": "63d41b25c634c6aef3852d3ecd03879e.FED2E1F1F1CE09667A891A55E1E7D1DA",
+    "updated": 1445871149421,
+    "model": "t0lte",
+    "device_id": "2bb9f350-4203-11e5-b07c-71c60df92d2d",
+    "sdk_version": "0.6.0",
+    "api_key": "63d41b25c634c6aef3852d3ecd03879e",
+    "client_id": "FED2E1F1F1CE09667A891A55E1E7D1DA",
+    "timestamp": 1445867995878,
+    "commercial_name": "Samsung Galaxy Note2",
+    "os_version": "4.1.2"
+  },
+  ...
 ]
-```
+{% endhighlight %}
 
 #### Example
 
-```python
+{% highlight python %}
 
 url = '{}/api/v2/user/_/application/{}/environments'.format(base_url,api_key)
 
@@ -205,24 +206,24 @@ environment_ids = []
 
 while True:
 
-	r = requests.get(url,auth = (username,password))
+  r = requests.get(url,auth = (username,password))
 
-	if not r.status_code==200:
-		raise Exception(r.status_code)
+  if not r.status_code==200:
+    raise Exception(r.status_code)
 
-	body = r.json()
+  body = r.json()
 
-	environment_ids += [ e['id'] for e in body['message']['environments'] ]
+  environment_ids += [ e['id'] for e in body['message']['environments'] ]
 
-	if 'next' in body['links']:
-		url = body['links']['next']
-	else:
-		break
+  if 'next' in body['links']:
+    url = body['links']['next']
+  else:
+    break
 
 for e_id in environment_ids:
-	print e_id
+  print e_id
 
-```
+{% endhighlight %}
 
 outputs:
 
@@ -258,55 +259,55 @@ parameter        |   description
 
 example response message:
 
-```json
+{% highlight json %}
 [
-	{  
-	   "environment_id":"63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455",
-	   "time":"2015-10-26T18:38:05.136Z",
-	   	"location":{  
-	      "longitude":3.6662295,
-	      "latitude":43.3977541,
-	      "accuracy":35.19900131225586
-	   },
-	   "derived_sensors":{  
-	      "temperature":{  
-	         "value":20.622745768229166,
-	         "confidence":0.9999999963628308
-	      }
-	   },
-	   "normalized_sensors":{  
-	      "lux":{  
-	         "value":0.36372525855
-	      }
-	   },
-	   "raw_sensors":{  
-	      "average_sman_pressure":{  
-	         "value":1012.5
-	      },
-		  "average_sman_humidity":{  
-		         "value":73.55426205721768
-		  }
-	   }
-	}
-	...
+  {
+    "environment_id":"63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455",
+    "time":"2015-10-26T18:38:05.136Z",
+    "location":{
+       "longitude":3.6662295,
+       "latitude":43.3977541,
+       "accuracy":35.19900131225586
+    },
+    "derived_sensors":{
+      "temperature":{
+        "value":20.622745768229166,
+        "confidence":0.9999999963628308
+      }
+    },
+    "normalized_sensors":{
+      "lux":{
+        "value":0.36372525855
+      }
+    },
+    "raw_sensors":{
+      "average_sman_pressure":{
+        "value":1012.5
+      },
+    }
+    "average_sman_humidity":{
+      "value":73.55426205721768
+    }
+  },
+  ...
 ]
-```
+{% endhighlight %}
 
 #### Example 1
 
 Get Most Recent Data
 
-```python
+{% highlight python %}
 url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
 
 r = requests.get(url, auth=(username,password) )
 
 if not r.status_code==200:
-	raise Exception('an error occurred')
+  raise Exception('an error occurred')
 
 for data in r.json()['message']['data']:
-	print data['time'] + '\t\t' + str(data['derived_sensors']['temperature']['value'])	
-```
+  print data['time'] + '\t\t' + str(data['derived_sensors']['temperature']['value'])
+{% endhighlight %}
 
 outputs:
 
@@ -327,61 +328,58 @@ outputs:
 
 Page Through All Data
 
-```python
+{% highlight python %}
 url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
 
 params = {}
 
 while True:
 
-	r = requests.get(url, auth = (username,password), params=params )
-	
-	if not r.status_code == 200:
-		raise Exception('an error occured')
+  r = requests.get(url, auth = (username,password), params=params )
 
-	dataCollection = r.json()['message']['data']
+  if not r.status_code == 200:
+    raise Exception('an error occured')
 
-	if len(dataCollection) == 0:
-		break
+  dataCollection = r.json()['message']['data']
 
-	for data in dataCollection:
-		print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+  if len(dataCollection) == 0:
+    break
 
-	params['end'] = data['time']
+  for data in dataCollection:
+    print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
 
-```
+  params['end'] = data['time']
+
+{% endhighlight %}
 
 #### Example 3
 
 Poll For Data
 
-```python
+{% highlight python %}
 
-	url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
 
-	params = {"order": "ascending",
-	          "start": datetime.datetime.utcnow().isoformat() }
+params = {"order": "ascending",
+          "start": datetime.datetime.utcnow().isoformat() }
 
-	while True:
+while True:
+  r = requests.get(url, auth = (username,password), params=params )
 
-		r = requests.get(url, auth = (username,password), params=params )
+  if not r.status_code == 200:
+    raise Exception('an error occured')
 
-		if not r.status_code == 200:
-			raise Exception('an error occured')
+  dataCollection = r.json()['message']['data']
 
-		dataCollection = r.json()['message']['data']
-
-		for data in dataCollection:
-
-			print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+  for data in dataCollection:
+    print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
 
 
-		if len(dataCollection) > 0:
-			params['start'] = data['time']
+  if len(dataCollection) > 0:
+    params['start'] = data['time']
 
-
-		time.sleep(60*15) # pause 15 minutes and poll again
-```
+  time.sleep(60*15) # pause 15 minutes and poll again
+{% endhighlight %}
 
 ### Get Application Info
 
@@ -395,20 +393,20 @@ GET https://senseai.io/api/v2/user/:user_id/application/:application_id
 
 example response message
 
-```json
+{% highlight json %}
 {
-    "application": {
-      "name": "Foo",
-      "api_key": "a673b59c13f703a461bfd3b4e7244302",
-      "user_id": "f507b1fa6bb4916b555816e89e7cea03",
-      "configuration": {
-        "master_switch": true,
-        "collection_rate": 20,
-        "post_diagnostic_data": false
-      },
+  "application": {
+    "name": "Foo",
+    "api_key": "a673b59c13f703a461bfd3b4e7244302",
+    "user_id": "f507b1fa6bb4916b555816e89e7cea03",
+    "configuration": {
+      "master_switch": true,
+      "collection_rate": 20,
+      "post_diagnostic_data": false
     }
- }
-```
+  }
+}
+{% endhighlight %}
 
 ### Change Application-Level Remote Configuration
 
@@ -425,10 +423,10 @@ PUT https://senseai.io/api/v2/user/:user_id/application/:application_id/configur
 
 example request body
 
-```
+{% highlight json %}
 {
-	"master_switch": true,
-	"collection_rate": 20,
-	"post_diagnostic_data": false
+  "master_switch": true,
+  "collection_rate": 20,
+  "post_diagnostic_data": false
 }
-```
+{% endhighlight %}

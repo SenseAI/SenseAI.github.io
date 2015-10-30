@@ -47,10 +47,9 @@
 
 <p>Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
 
-<pre><code class="language-python">import requests
-import time
-import datetime
-</code></pre>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span></code></pre></div>
 
 <p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.</p>
 
@@ -84,29 +83,28 @@ import datetime
 
 <h4 id="example-response">Example Response</h4>
 
-<pre><code class="language-json">{
-  "links": {
-    "self": "https://senseai-staging.com/api/v2/user/_/"
-  },
-  "status": {
-    "code": 200,
-    "text": "OK"
-  },
-  "error": null,
-  "message": {
-    "user": {
-      "id": "f507b1fa6bb4916b555816e89e7cea03",
-      "email": "foo@bar.com",
-      "roles": [
-        "user",
-        "developer:basic"
-      ],
-      "unit_preference": "imperial",
-      "created": 1432655398966,
-    }
-  }
-}
-</code></pre>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="s2">&quot;https://senseai-staging.com/api/v2/user/_/&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;f507b1fa6bb4916b555816e89e7cea03&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;foo@bar.com&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;roles&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;developer:basic&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;unit_preference&quot;</span><span class="p">:</span> <span class="s2">&quot;imperial&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1432655398966</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 
 <h4 id="response-envelope-keys">Response Envelope Keys</h4>
 
@@ -181,40 +179,39 @@ import datetime
 
 <p>example response message</p>
 
-<pre><code class="language-json">[
-	{
-		"id":"23bb76f0-482b-11e5-a230-95b571d65c97",
-		"name":"OnePlus One",
-		"osVersion":"&lt;5.0.0",
-	}, ...
-]
-</code></pre>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;23bb76f0-482b-11e5-a230-95b571d65c97&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;OnePlus One&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;osVersion&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;5.0.0&quot;</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span></code></pre></div>
 
 <h4 id="example-code">Example Code</h4>
 
-<pre><code class="language-python">url = '{}/device/compat'.format(base_url)
-params = { 'onlyTempV2' : 'yes' }
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/device/compat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;onlyTempV2&#39;</span> <span class="p">:</span> <span class="s">&#39;yes&#39;</span> <span class="p">}</span>
 
-r = requests.get(url, params=params)
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 
-if not r.status_code==200:
-	raise Exception('an error occurred')
+<span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
+  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occurred&#39;</span><span class="p">)</span>
 
-devices = r.json()['message']['devices']
+<span class="n">devices</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;devices&#39;</span><span class="p">]</span>
 
-print 'Supported Devices'
+<span class="k">print</span> <span class="s">&#39;Supported Devices&#39;</span>
 
-for device in devices:
-	print '\t' + device['name'] + ' ' + device['osVersion']
-</code></pre>
+<span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
+  <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">&#39;osVersion&#39;</span><span class="p">]</span></code></pre></div>
 
 <p>outputs:</p>
 
 <pre><code>Supported Devices
-	Samsung Galaxy S5 4.4.2
-	Samsung Galaxy S5 &gt;=5.0
-	Samsung Galaxy S5 4.4.4
-	Samsung Galaxy S4  *
+  Samsung Galaxy S5 4.4.2
+  Samsung Galaxy S5 &gt;=5.0
+  Samsung Galaxy S5 4.4.4
+  Samsung Galaxy S4  *
 </code></pre>
 
 <h3 id="list-environments-for-an-application">List Environments for an Application</h3>
@@ -230,50 +227,46 @@ for device in devices:
 
 <p>example response message</p>
 
-<pre><code class="language-json">[
-	{
-	  "id": "63d41b25c634c6aef3852d3ecd03879e.FED2E1F1F1CE09667A891A55E1E7D1DA",
-	  "updated": 1445871149421,
-	  "model": "t0lte",
-	  "device_id": "2bb9f350-4203-11e5-b07c-71c60df92d2d",
-	  "sdk_version": "0.6.0",
-	  "api_key": "63d41b25c634c6aef3852d3ecd03879e",
-	  "client_id": "FED2E1F1F1CE09667A891A55E1E7D1DA",
-	  "timestamp": 1445867995878,
-	  "commercial_name": "Samsung Galaxy Note2",
-	  "os_version": "4.1.2"
-	},
-	...
-]
-</code></pre>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;63d41b25c634c6aef3852d3ecd03879e.FED2E1F1F1CE09667A891A55E1E7D1DA&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;updated&quot;</span><span class="p">:</span> <span class="mi">1445871149421</span><span class="p">,</span>
+    <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;t0lte&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;device_id&quot;</span><span class="p">:</span> <span class="s2">&quot;2bb9f350-4203-11e5-b07c-71c60df92d2d&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;sdk_version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.6.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;api_key&quot;</span><span class="p">:</span> <span class="s2">&quot;63d41b25c634c6aef3852d3ecd03879e&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;client_id&quot;</span><span class="p">:</span> <span class="s2">&quot;FED2E1F1F1CE09667A891A55E1E7D1DA&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mi">1445867995878</span><span class="p">,</span>
+    <span class="nt">&quot;commercial_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Samsung Galaxy Note2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;os_version&quot;</span><span class="p">:</span> <span class="s2">&quot;4.1.2&quot;</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span></code></pre></div>
 
 <h4 id="example">Example</h4>
 
-<pre><code class="language-python">
-url = '{}/api/v2/user/_/application/{}/environments'.format(base_url,api_key)
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environments&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">)</span>
 
-environment_ids = []
+<span class="n">environment_ids</span> <span class="o">=</span> <span class="p">[]</span>
 
-while True:
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
 
-	r = requests.get(url,auth = (username,password))
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">))</span>
 
-	if not r.status_code==200:
-		raise Exception(r.status_code)
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
 
-	body = r.json()
+  <span class="n">body</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-	environment_ids += [ e['id'] for e in body['message']['environments'] ]
+  <span class="n">environment_ids</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">e</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">body</span><span class="p">[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;environments&#39;</span><span class="p">]</span> <span class="p">]</span>
 
-	if 'next' in body['links']:
-		url = body['links']['next']
-	else:
-		break
+  <span class="k">if</span> <span class="s">&#39;next&#39;</span> <span class="ow">in</span> <span class="n">body</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]:</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="s">&#39;next&#39;</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">break</span>
 
-for e_id in environment_ids:
-	print e_id
-
-</code></pre>
+<span class="k">for</span> <span class="n">e_id</span> <span class="ow">in</span> <span class="n">environment_ids</span><span class="p">:</span>
+  <span class="k">print</span> <span class="n">e_id</span></code></pre></div>
 
 <p>outputs:</p>
 
@@ -327,53 +320,51 @@ for e_id in environment_ids:
 
 <p>example response message:</p>
 
-<pre><code class="language-json">[
-	{  
-	   "environment_id":"63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455",
-	   "time":"2015-10-26T18:38:05.136Z",
-	   	"location":{  
-	      "longitude":3.6662295,
-	      "latitude":43.3977541,
-	      "accuracy":35.19900131225586
-	   },
-	   "derived_sensors":{  
-	      "temperature":{  
-	         "value":20.622745768229166,
-	         "confidence":0.9999999963628308
-	      }
-	   },
-	   "normalized_sensors":{  
-	      "lux":{  
-	         "value":0.36372525855
-	      }
-	   },
-	   "raw_sensors":{  
-	      "average_sman_pressure":{  
-	         "value":1012.5
-	      },
-		  "average_sman_humidity":{  
-		         "value":73.55426205721768
-		  }
-	   }
-	}
-	...
-]
-</code></pre>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;environment_id&quot;</span><span class="p">:</span><span class="s2">&quot;63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;2015-10-26T18:38:05.136Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;location&quot;</span><span class="p">:{</span>
+       <span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="mf">3.6662295</span><span class="p">,</span>
+       <span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="mf">43.3977541</span><span class="p">,</span>
+       <span class="nt">&quot;accuracy&quot;</span><span class="p">:</span><span class="mf">35.19900131225586</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;derived_sensors&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;temperature&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">20.622745768229166</span><span class="p">,</span>
+        <span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="mf">0.9999999963628308</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;normalized_sensors&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;lux&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">0.36372525855</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;raw_sensors&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;average_sman_pressure&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">1012.5</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="s2">&quot;average_sman_humidity&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">73.55426205721768</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span></code></pre></div>
 
 <h4 id="example-1">Example 1</h4>
 
 <p>Get Most Recent Data</p>
 
-<pre><code class="language-python">url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environment/{}/data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
 
-r = requests.get(url, auth=(username,password) )
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span> <span class="p">)</span>
 
-if not r.status_code==200:
-	raise Exception('an error occurred')
+<span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
+  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occurred&#39;</span><span class="p">)</span>
 
-for data in r.json()['message']['data']:
-	print data['time'] + '\t\t' + str(data['derived_sensors']['temperature']['value'])	
-</code></pre>
+<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]:</span>
+  <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;derived_sensors&#39;</span><span class="p">][</span><span class="s">&#39;temperature&#39;</span><span class="p">][</span><span class="s">&#39;value&#39;</span><span class="p">])</span></code></pre></div>
 
 <p>outputs:</p>
 
@@ -393,59 +384,52 @@ for data in r.json()['message']['data']:
 
 <p>Page Through All Data</p>
 
-<pre><code class="language-python">url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environment/{}/data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
 
-params = {}
+<span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
 
-while True:
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
 
-	r = requests.get(url, auth = (username,password), params=params )
-	
-	if not r.status_code == 200:
-		raise Exception('an error occured')
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span> <span class="p">)</span>
 
-	dataCollection = r.json()['message']['data']
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occured&#39;</span><span class="p">)</span>
 
-	if len(dataCollection) == 0:
-		break
+  <span class="n">dataCollection</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
 
-	for data in dataCollection:
-		print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataCollection</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">break</span>
 
-	params['end'] = data['time']
+  <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataCollection</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;derived_sensors&#39;</span><span class="p">][</span><span class="s">&#39;temperature&#39;</span><span class="p">][</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
 
-</code></pre>
+  <span class="n">params</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span></code></pre></div>
 
 <h4 id="example-3">Example 3</h4>
 
 <p>Poll For Data</p>
 
-<pre><code class="language-python">
-	url = '{}/api/v2/user/_/application/{}/environment/{}/data'.format(base_url,api_key,environment_id)
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environment/{}/data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
 
-	params = {"order": "ascending",
-	          "start": datetime.datetime.utcnow().isoformat() }
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="s">&quot;ascending&quot;</span><span class="p">,</span>
+          <span class="s">&quot;start&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="p">}</span>
 
-	while True:
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span> <span class="p">)</span>
 
-		r = requests.get(url, auth = (username,password), params=params )
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occured&#39;</span><span class="p">)</span>
 
-		if not r.status_code == 200:
-			raise Exception('an error occured')
+  <span class="n">dataCollection</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
 
-		dataCollection = r.json()['message']['data']
-
-		for data in dataCollection:
-
-			print data['time'] + '\t' + str(data['derived_sensors']['temperature']['value'])
+  <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataCollection</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;derived_sensors&#39;</span><span class="p">][</span><span class="s">&#39;temperature&#39;</span><span class="p">][</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
 
 
-		if len(dataCollection) &gt; 0:
-			params['start'] = data['time']
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataCollection</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span>
 
-
-		time.sleep(60*15) # pause 15 minutes and poll again
-</code></pre>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">15</span><span class="p">)</span> <span class="c"># pause 15 minutes and poll again</span></code></pre></div>
 
 <h3 id="get-application-info">Get Application Info</h3>
 
@@ -458,19 +442,18 @@ while True:
 
 <p>example response message</p>
 
-<pre><code class="language-json">{
-    "application": {
-      "name": "Foo",
-      "api_key": "a673b59c13f703a461bfd3b4e7244302",
-      "user_id": "f507b1fa6bb4916b555816e89e7cea03",
-      "configuration": {
-        "master_switch": true,
-        "collection_rate": 20,
-        "post_diagnostic_data": false
-      },
-    }
- }
-</code></pre>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;application&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;api_key&quot;</span><span class="p">:</span> <span class="s2">&quot;a673b59c13f703a461bfd3b4e7244302&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="s2">&quot;f507b1fa6bb4916b555816e89e7cea03&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;master_switch&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;collection_rate&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;post_diagnostic_data&quot;</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 
 <h3 id="change-application-level-remote-configuration">Change Application-Level Remote Configuration</h3>
 
@@ -485,12 +468,12 @@ while True:
 
 <p>example request body</p>
 
-<pre><code>{
-	"master_switch": true,
-	"collection_rate": 20,
-	"post_diagnostic_data": false
-}
-</code></pre>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;master_switch&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;collection_rate&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="nt">&quot;post_diagnostic_data&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></div>
+
 
         </section>
 
