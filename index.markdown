@@ -4,8 +4,12 @@ title: API Documentation
 ---
 
 # API Documentation
-
-## General
+<div class="section" id="GroupA">
+  <h2>
+    General
+    <a class="headerlink" href="#GroupA"></a>
+  </h2>
+</div>
 
 ### Conventions
 
