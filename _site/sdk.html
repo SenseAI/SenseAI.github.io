@@ -10,6 +10,11 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <link rel="stylesheet" type="text/css" href="stylesheets/syntax.css" media="screen">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/javascripts/main.js"></script>
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,7 +23,7 @@
     <title>Sense AI Documentation</title>
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#scrollSpy" data-offset="15">
     <header>
       <div class="inner">
         <img src="//d3r46qqpc6jz4w.cloudfront.net/senseai/SenseAi_logo.svg">
@@ -27,6 +32,7 @@
     </header>
 
     <div id="content-wrapper">
+
       <div class="inner clearfix">
         <section id="main-content" class="markdown-body">
           <h3>
@@ -47,11 +53,36 @@
 
         </section>
 
-        <aside id="sidebar">
-
+        <aside id="sideNav">
+            <nav class="bs-docs-sidebar">
+                <ul id="sidebar" class="nav nav-stacked">
+                    <li>
+                        <a href="#apiDocumentation">API Documentation</a>
+                    </li>
+                    <li>
+                        <a href="#apiGeneral">General</a>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#apiConventions">Conventions</a></li>
+                            <li><a href="#apiDocsAndCode">Documentation Code Examples</a></li>
+                            <li><a href="#apiResource">Resource Descriptors</a></li>
+                            <li><a href="#apiResponse">Response Envelope</a></li>
+                            <li><a href="#apiPagination">Pagination</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#apiRoutes">API Routes</a>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#apiCompatibility">List Device Compatibility</a></li>
+                            <li><a href="#apiEnvironments">List Environments for an Application</a></li>
+                            <li><a href="#apiQueryData">Query Data from an Environment in an Application</a></li>
+                            <li><a href="#apiApplicationInfo">Get Application Info</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </aside>
-      </div>
     </div>
+</div>
 
 
   </body>
