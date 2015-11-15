@@ -3,25 +3,33 @@ layout: default
 title: API Documentation
 ---
 
-# API Documentation
-<div class="section" id="GroupA">
-  <h2>
-    General
-    <a class="headerlink" href="#GroupA"></a>
-  </h2>
+<div id="apiDocumentation" class="group">
+  <h1>API Documentation</h1>
+  <a class="headerlink" href="#apiDocumentation"></a>
 </div>
 
-### Conventions
+<div id="apiGeneral" class="group">
+  <h2 class="page-header">General</h2>
+  <a class="headerlink" href="#apiConventions"></a>
+</div>
+<div id="apiConventions" class="group">
+  <h3>Conventions</h3>
+  <a class="headerlink" href="#apiConventions"></a>
+</div>
 
-#### Authentication
+
+##### Authentication
 
 Where required, Basic Auth is used for user/developer level api access.
 
-#### Time
+##### Time
 
 Where timestamps are required either an ISO-8601 date string or a milliseconds-since-epoch(UTC), can be used interchangeably
 
-### Documentation Code Examples
+<div id="apiDocsAndCode" class="group">
+  <h3>Documentation Code Examples</h3>
+  <a class="headerlink" href="#apiDocsAndCode"></a>
+</div>
 
 Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:
 
@@ -33,7 +41,10 @@ import datetime
 
 We use [requests](http://docs.python-requests.org/en/latest/) for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.
 
-### Resource Descriptors
+<div id="apiResource" class="group">
+  <h3>Resource Descriptors</h3>
+  <a class="headerlink" href="#apiResource"></a>
+</div>
 
 It is useful to too look at how SenseAI's backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:
 
@@ -57,7 +68,10 @@ These relationships create the following possible resource descriptors:
 `/user/:user_id/application/:application_id/environment/:environment_id/data`
 `/user/:user_id/application/:application_id/environments`
 
-### Response Envelope
+<div id="apiResponse" class="group">
+  <h3>Response Envelope</h3>
+  <a class="headerlink" href="#apiResponse"></a>
+</div>
 
 All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for `GET /user/_` is seen below.
 
@@ -99,14 +113,24 @@ All response bodies are JSON encoded.  All JSON responses have a standard respon
 | error       | if an error occurred, a description of that error                      |
 | message     | the payload of the resource accessed (typically this is what you want) |
 
-### Pagination
+
+
+<div id="apiPagination" class="group">
+  <h3>Pagination</h3>
+  <a class="headerlink" href="#apiPagination"></a>
+</div>
 
 For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: `limit` determines the number of items returned at a time, `offset` is the id of the last item obtained by the caller.  If the `links.next` field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.
 
+<div id="apiRoutes" class="group">
+  <h2 class="page-header">API Routes</h2>
+  <a class="headerlink" href="#apiRoutes"></a>
+</div>
 
-## API Routes
-
-### List Device Compatibility
+<div id="apiCompatibility" class="group">
+  <h3>List Device Compatibility</h3>
+  <a class="headerlink" href="#apiCompatibility"></a>
+</div>
 
 Get a list of SDK compatible devices, ones for which software sensors have been calibrated.
 
@@ -167,8 +191,10 @@ Supported Devices
   Samsung Galaxy S4  *
 ```
 
-
-### List Environments for an Application
+<div id="apiEnvironments" class="group">
+  <h3>List Environments for an Application</h3>
+  <a class="headerlink" href="#apiEnvironments"></a>
+</div>
 
 List the environments registered with an api_key.  This requires pagination since this list can be quite large depending on the distribution of an app using sdk.
 
@@ -242,7 +268,10 @@ outputs:
 ...
 ```
 
-### Query Data from an Environment in an Application
+<div id="apiQueryData" class="group">
+  <h3>Query Data from an Environment in an Application</h3>
+  <a class="headerlink" href="#apiQueryData"></a>
+</div>
 
 #### URL
 
@@ -385,7 +414,10 @@ while True:
   time.sleep(60*15) # pause 15 minutes and poll again
 {% endhighlight %}
 
-### Get Application Info
+<div id="apiApplicationInfo" class="group">
+  <h3>Get Application Info</h3>
+  <a class="headerlink" href="#apiApplicationInfo"></a>
+</div>
 
 #### URL
 

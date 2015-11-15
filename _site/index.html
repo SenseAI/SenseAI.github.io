@@ -10,7 +10,11 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <link rel="stylesheet" type="text/css" href="stylesheets/syntax.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/syntax.css" media="screen">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/javascripts/main.js"></script>
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -19,7 +23,7 @@
     <title>Sense AI Documentation</title>
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#scrollSpy" data-offset="15">
     <header>
       <div class="inner">
         <img src="//d3r46qqpc6jz4w.cloudfront.net/senseai/SenseAi_logo.svg">
@@ -28,27 +32,35 @@
     </header>
 
     <div id="content-wrapper">
+
       <div class="inner clearfix">
         <section id="main-content" class="markdown-body">
-          <h1 id="api-documentation">API Documentation</h1>
-<div class="section" id="GroupA">
-  <h2>
-    General
-    <a class="headerlink" href="#GroupA"></a>
-  </h2>
+          <div id="apiDocumentation" class="group">
+  <h1>API Documentation</h1>
+  <a class="headerlink" href="#apiDocumentation"></a>
 </div>
 
-<h3 id="conventions">Conventions</h3>
+<div id="apiGeneral" class="group">
+  <h2 class="page-header">General</h2>
+  <a class="headerlink" href="#apiConventions"></a>
+</div>
+<div id="apiConventions" class="group">
+  <h3>Conventions</h3>
+  <a class="headerlink" href="#apiConventions"></a>
+</div>
 
-<h4 id="authentication">Authentication</h4>
+<h5 id="authentication">Authentication</h5>
 
 <p>Where required, Basic Auth is used for user/developer level api access.</p>
 
-<h4 id="time">Time</h4>
+<h5 id="time">Time</h5>
 
 <p>Where timestamps are required either an ISO-8601 date string or a milliseconds-since-epoch(UTC), can be used interchangeably</p>
 
-<h3 id="documentation-code-examples">Documentation Code Examples</h3>
+<div id="apiDocsAndCode" class="group">
+  <h3>Documentation Code Examples</h3>
+  <a class="headerlink" href="#apiDocsAndCode"></a>
+</div>
 
 <p>Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
 
@@ -58,7 +70,10 @@
 
 <p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.</p>
 
-<h3 id="resource-descriptors">Resource Descriptors</h3>
+<div id="apiResource" class="group">
+  <h3>Resource Descriptors</h3>
+  <a class="headerlink" href="#apiResource"></a>
+</div>
 
 <p>It is useful to too look at how SenseAI’s backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:</p>
 
@@ -82,7 +97,10 @@
 <code>/user/:user_id/application/:application_id/environment/:environment_id/data</code><br />
 <code>/user/:user_id/application/:application_id/environments</code></p>
 
-<h3 id="response-envelope">Response Envelope</h3>
+<div id="apiResponse" class="group">
+  <h3>Response Envelope</h3>
+  <a class="headerlink" href="#apiResponse"></a>
+</div>
 
 <p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for <code>GET /user/_</code> is seen below.</p>
 
@@ -148,13 +166,22 @@
   </tbody>
 </table>
 
-<h3 id="pagination">Pagination</h3>
+<div id="apiPagination" class="group">
+  <h3>Pagination</h3>
+  <a class="headerlink" href="#apiPagination"></a>
+</div>
 
 <p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code>limit</code> determines the number of items returned at a time, <code>offset</code> is the id of the last item obtained by the caller.  If the <code>links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.</p>
 
-<h2 id="api-routes">API Routes</h2>
+<div id="apiRoutes" class="group">
+  <h2 class="page-header">API Routes</h2>
+  <a class="headerlink" href="#apiRoutes"></a>
+</div>
 
-<h3 id="list-device-compatibility">List Device Compatibility</h3>
+<div id="apiCompatibility" class="group">
+  <h3>List Device Compatibility</h3>
+  <a class="headerlink" href="#apiCompatibility"></a>
+</div>
 
 <p>Get a list of SDK compatible devices, ones for which software sensors have been calibrated.</p>
 
@@ -219,7 +246,10 @@
   Samsung Galaxy S4  *
 </code></pre>
 
-<h3 id="list-environments-for-an-application">List Environments for an Application</h3>
+<div id="apiEnvironments" class="group">
+  <h3>List Environments for an Application</h3>
+  <a class="headerlink" href="#apiEnvironments"></a>
+</div>
 
 <p>List the environments registered with an api_key.  This requires pagination since this list can be quite large depending on the distribution of an app using sdk.</p>
 
@@ -285,7 +315,10 @@
 ...
 </code></pre>
 
-<h3 id="query-data-from-an-environment-in-an-application">Query Data from an Environment in an Application</h3>
+<div id="apiQueryData" class="group">
+  <h3>Query Data from an Environment in an Application</h3>
+  <a class="headerlink" href="#apiQueryData"></a>
+</div>
 
 <h4 id="url-2">URL</h4>
 
@@ -436,7 +469,10 @@
 
   <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">15</span><span class="p">)</span> <span class="c"># pause 15 minutes and poll again</span></code></pre></div>
 
-<h3 id="get-application-info">Get Application Info</h3>
+<div id="apiApplicationInfo" class="group">
+  <h3>Get Application Info</h3>
+  <a class="headerlink" href="#apiApplicationInfo"></a>
+</div>
 
 <h4 id="url-3">URL</h4>
 
@@ -482,36 +518,36 @@
 
         </section>
 
-        <aside id="sidebar">
-          <nav class="bs-docs-sidebar">
-            <ul id="sidebar" class="nav nav-stacked fixed">
-                <li>
-                    <a href="#GroupA">Group A</a>
-                    <ul class="nav nav-stacked">
-                        <li><a href="#GroupASub1">Sub-Group 1</a></li>
-                        <li><a href="#GroupASub2">Sub-Group 2</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#GroupB">Group B</a>
-                    <ul class="nav nav-stacked">
-                        <li><a href="#GroupBSub1">Sub-Group 1</a></li>
-                        <li><a href="#GroupBSub2">Sub-Group 2</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#GroupC">Group C</a>
-                    <ul class="nav nav-stacked">
-                        <li><a href="#GroupCSub1">Sub-Group 1</a></li>
-                        <li><a href="#GroupCSub2">Sub-Group 2</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-
+        <aside id="sideNav">
+            <nav class="bs-docs-sidebar">
+                <ul id="sidebar" class="nav nav-stacked">
+                    <li>
+                        <a href="#apiDocumentation">API Documentation</a>
+                    </li>
+                    <li>
+                        <a href="#apiGeneral">General</a>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#apiConventions">Conventions</a></li>
+                            <li><a href="#apiDocsAndCode">Documentation Code Examples</a></li>
+                            <li><a href="#apiResource">Resource Descriptors</a></li>
+                            <li><a href="#apiResponse">Response Envelope</a></li>
+                            <li><a href="#apiPagination">Pagination</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#apiRoutes">API Routes</a>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#apiCompatibility">List Device Compatibility</a></li>
+                            <li><a href="#apiEnvironments">List Environments for an Application</a></li>
+                            <li><a href="#apiQueryData">Query Data from an Environment in an Application</a></li>
+                            <li><a href="#apiApplicationInfo">Get Application Info</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </aside>
-      </div>
     </div>
+</div>
 
 
   </body>
