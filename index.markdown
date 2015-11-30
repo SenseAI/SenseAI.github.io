@@ -466,3 +466,116 @@ example request body
   "post_diagnostic_data": false
 }
 {% endhighlight %}
+
+
+<div id="sdkDocumentation" class="group">
+  <h1>SDK Documentation</h1>
+  <a class="headerlink" href="#sdkDocumentation"></a>
+</div>
+
+<div id="sdkGeneral" class="group">
+  <h2 class="page-header">About the SDK</h2>
+  <a class="headerlink" href="#sdkGeneral"></a>
+</div>
+
+#### Introduction
+
+This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support. 
+
+#### What does the SDK do?
+
+The purpose of the SDK is to normalize and extend the sensing capabilities of Android devices without any additional hardware.  This enables the measurement of comparable physical and context variables in the neighborhood of the device.  A complete list of the measurements can be found in section 11 of this document.
+
+#### Basics of Operation
+
+The SDK is compatible with Android SDK versions 15 and up.
+
+At the core of the SDK is a Service that curates measurements derived from sensors and other data sources, and tags them with the time and last known location. The Service can be configured so that it is constantly running (even if the parent app has been killed) either at a fast rate or at a slow rate or it can be configured on a timer to sleep and wake up every few minutes to make a temperature prediction and then go back to sleep until it is awoken by the timer again. The period of the timer is defaulted to 15 minutes however the developer can configure this time remotely from the developer portal to range between 3 and 15 minutes per prediction.
+
+Predictions are not made instantaneously and require at least 40 seconds of on-time before a prediction can be made.
+
+Measurement results are communicated from the SDK to the parent app via a Local Broadcast. To receive updates from the SDK the developer will need to extend and register the KelvinWakefulBroadcastReceiver from the SDK. This will allow the parent app to receive updates while in the foreground, background or after being killed.
+
+<div id="sdkBasicImplementation" class="group">
+    <h2 class="page-header">Implementation Basics</h2>
+  <a class="headerlink" href="#sdkBasicImplementation"></a>
+</div>
+
+#### Connect to the SDK
+
+The developer accesses the SDK through a class called KelvinInit. The KelvinInit class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal. 
+
+To begin using the SDK the getInstance() method must be called. This method returns immediately with a reference to KelvinInit.
+
+Before the SDK can be used it must be connected to. To do this the connect() method must be called. The connect() method is asynchronous because the SDK needs to authenticate the application and ensure device compatibility. The connect() method requires an api key and developer id which can be obtained from our developer web portal. The ConnectionCallback is used to let the application know when the SDK is connected, is compatible or if the connection failed. Once the connection callback indicates that the SDK is connected and compatible then the rest of the SDK methods are able to be called. If any of the other methods are called prior to the SDK being connected, then a RuntimeException will be thrown.
+
+#### Adjust SDK Settings
+
+If the developer desires to change the rate of data collection the setDataMode() method can be called and supplied with one of four modes: OperatingMode.ALWAYS_FAST, OperatingMode.ALWAYS_SLOW, OperatingMode.TIMER and OperatingMode.OFF. The ALWAYS_SLOW and ALWAYS_FAST modes put the SDK in a mode where data is constantly collected to make predictions. Predictions will occur either every 40 seconds or every 10 seconds respectively. To set the SDK to TIMER mode the TIMER argument is supplied and the SDK will revert back to sleeping for period of time then waking up and making a prediction. If starting out in TIMER mode it will take 60 seconds before a prediction is returned. The period of the timer is set through the developer portal. OperatingMode.OFF will stop the data collection from occurring. Data collection will not occur again until the mode is set to something other than OperatingMode.OFF.
+
+#### Receive data from the SDK
+
+The SDK contains a public abstract class that extends WakefulBroadcastReceiver that can be extended by the developer and used to receive updates from the Sense Ai SDK. The developer needs to create and register instances of this BroadcastReceiver wherever updates are required. For instance, in an app that wants to log temperature and location data, the developer might create an instance of the WakefulBroadcastReceiver in their Application class and register it in onCreate() of the Application class. Because it’s a wakeful broadcast receiver, whenever a broadcast is received the receiver can fire off an IntentService to do work such as persisting the values to a database. This ensures that data can be collected and persisted even if the parent app has been killed or is in the background. In other instances, it may only be important to collect data in an Activity or Fragment and so the broadcast receiver can just be registered/unregistered in onStart() and onPause().
+
+Note that it is not necessary to initialize the Sense Ai SDK in a service. It creates a Service internally to ensure that it can outlive the class that instantiates it so the predictions can be made whether the app is in the foreground, background or has been killed. The Service is still susceptible to the OS killing it because of memory pressure, however it will automatically start again once the OS allows it.
+
+The SDK doesn’t cache predictions, it simply returns them to the parent app and the parent app can use them however it needs to.  
+
+<div id="sdkGetStarted" class="group">
+    <h2 class="page-header">Get Started</h2>
+  <a class="headerlink" href="#sdkGetStarted"></a>
+</div>
+
+1. Register for API key and Developer id
+   1. Create an account <a href="https://senseai.io/home/products_and_services">here:</a>
+   2. Log In to get your developer id.
+   3. Generate an API key using your app’s package name. Note, if the package name ever changes, you must retrieve a new API key.
+2. Add library files to your project
+   1. Your project structure should include the following directories
+      Project-Dir/app/<b>libs</b>
+
+      Add the following file to the <b>libs</b> directory
+
+      <b>kelvinsdk-production-onlinesdk-release-0.7.0<b/>
+3. Setup project in Gradle
+   1. Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.
+   2. Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
+    {% highlight groovy %}
+    android {
+      packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+      }
+      repositories {
+          flatDir {
+              dirs 'libs'
+          }
+      }
+    }
+      dependencies {
+      compile fileTree(dir: 'libs', include: ['*.jar'])
+      compile 'com.android.support:appcompat-v7:21.0.3'
+      compile (name:'kelvinsdk-onlinesdk-release-prod-0-6-0', ext:'aar')
+      compile 'org.apache.commons:commons-math3:3.3'
+      compile 'com.google.code.gson:gson:2.3.1'
+      compile 'com.github.zafarkhaja:java-semver:0.9.0'
+      compile 'com.koushikdutta.ion:ion:2.1.3'
+      compile 'com.google.android.gms:play-services-base:7.0.0'
+      compile 'com.google.android.gms:play-services-location:7.0.0'
+    } 
+    {% endhighlight %}
+4. Manifest setup
+   1. Add the following lines (in bold) to your AndroidManifest.xml file:
+    {% highlight xml %}
+    <manifest 
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.example.app" >
+
+      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+      <uses-permission android:name="android.permission.INTERNET" />
+
+      <application android :name=”.Your Application Class Name” >
+        ...
+      </application>
+    </manifest>
+    {% endhighlight %}
+
