@@ -579,3 +579,7 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
     </manifest>
     {% endhighlight %}
 
+  <b>*Note if you’re not extending the application class you can disregard the android:name=”.Your Application Class Name” line.</b>
+
+  5. Setup complete
+     1. Your project is not setup to run the SDK and resolve the SDK's dependencies
