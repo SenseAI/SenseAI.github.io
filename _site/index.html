@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <link rel="stylesheet" type="text/css" href="stylesheets/syntax.css" media="screen">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/sdk-stylesheet.css" title="Style">`
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -65,9 +64,9 @@
 
 <p>Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">datetime</span></code></pre></figure>
+<span class="kn">import</span> <span class="nn">datetime</span></code></pre></div>
 
 <p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.</p>
 
@@ -88,47 +87,47 @@
 
 <p>These relationships create the following possible resource descriptors:</p>
 
-<p><code class="highlighter-rouge">/user/:user_id/</code><br />
-<code class="highlighter-rouge">/user/:user_id/environment/:environment_id/</code><br />
-<code class="highlighter-rouge">/user/:user_id/environment/:environment_id/data</code><br />
-<code class="highlighter-rouge">/user/:user_id/environments</code><br />
-<code class="highlighter-rouge">/user/:user_id/application/:application_id/</code><br />
-<code class="highlighter-rouge">/user/:user_id/applications</code><br />
-<code class="highlighter-rouge">/user/:user_id/application/:application_id/environment/:environment_id</code><br />
-<code class="highlighter-rouge">/user/:user_id/application/:application_id/environment/:environment_id/data</code><br />
-<code class="highlighter-rouge">/user/:user_id/application/:application_id/environments</code></p>
+<p><code>/user/:user_id/</code><br />
+<code>/user/:user_id/environment/:environment_id/</code><br />
+<code>/user/:user_id/environment/:environment_id/data</code><br />
+<code>/user/:user_id/environments</code><br />
+<code>/user/:user_id/application/:application_id/</code><br />
+<code>/user/:user_id/applications</code><br />
+<code>/user/:user_id/application/:application_id/environment/:environment_id</code><br />
+<code>/user/:user_id/application/:application_id/environment/:environment_id/data</code><br />
+<code>/user/:user_id/application/:application_id/environments</code></p>
 
 <div id="apiResponse" class="group">
   <h3>Response Envelope</h3>
   <a class="headerlink" href="#apiResponse"></a>
 </div>
 
-<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for <code class="highlighter-rouge">GET /user/_</code> is seen below.</p>
+<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for <code>GET /user/_</code> is seen below.</p>
 
 <h4 id="example-response">Example Response</h4>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://senseai-staging.com/api/v2/user/_/"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f507b1fa6bb4916b555816e89e7cea03"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo@bar.com"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"developer:basic"</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"unit_preference"</span><span class="p">:</span><span class="w"> </span><span class="s2">"imperial"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1432655398966</span><span class="p">,</span><span class="w">
-    </span><span class="err">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="s2">&quot;https://senseai-staging.com/api/v2/user/_/&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;f507b1fa6bb4916b555816e89e7cea03&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;foo@bar.com&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;roles&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;developer:basic&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;unit_preference&quot;</span><span class="p">:</span> <span class="s2">&quot;imperial&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1432655398966</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 
 <h4 id="response-envelope-keys">Response Envelope Keys</h4>
 
@@ -172,7 +171,7 @@
   <a class="headerlink" href="#apiPagination"></a>
 </div>
 
-<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code class="highlighter-rouge">limit</code> determines the number of items returned at a time, <code class="highlighter-rouge">offset</code> is the id of the last item obtained by the caller.  If the <code class="highlighter-rouge">links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.</p>
+<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code>limit</code> determines the number of items returned at a time, <code>offset</code> is the id of the last item obtained by the caller.  If the <code>links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.</p>
 
 <div id="apiRoutes" class="group">
   <h2 class="page-header">API Routes</h2>
@@ -188,9 +187,8 @@
 
 <h4 id="url">URL</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>GET https://senseai.io/api/v2/device/compat
+<pre><code>GET https://senseai.io/api/v2/device/compat
 </code></pre>
-</div>
 
 <h4 id="options">Options</h4>
 
@@ -213,41 +211,40 @@
 
 <p>example response message</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"23bb76f0-482b-11e5-a230-95b571d65c97"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"OnePlus One"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"osVersion"</span><span class="p">:</span><span class="s2">"&lt;5.0.0"</span><span class="p">,</span><span class="w">
-  </span><span class="err">}</span><span class="p">,</span><span class="w">
-  </span><span class="err">...</span><span class="w">
-</span><span class="p">]</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;23bb76f0-482b-11e5-a230-95b571d65c97&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;OnePlus One&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;osVersion&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;5.0.0&quot;</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span></code></pre></div>
 
 <h4 id="example-code">Example Code</h4>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">'{}/device/compat'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">)</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s">'onlyTempV2'</span> <span class="p">:</span> <span class="s">'yes'</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/device/compat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;onlyTempV2&#39;</span> <span class="p">:</span> <span class="s">&#39;yes&#39;</span> <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
-  <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'an error occurred'</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occurred&#39;</span><span class="p">)</span>
 
-<span class="n">devices</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'message'</span><span class="p">][</span><span class="s">'devices'</span><span class="p">]</span>
+<span class="n">devices</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;devices&#39;</span><span class="p">]</span>
 
-<span class="k">print</span> <span class="s">'Supported Devices'</span>
+<span class="k">print</span> <span class="s">&#39;Supported Devices&#39;</span>
 
 <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
-  <span class="k">print</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">'osVersion'</span><span class="p">]</span></code></pre></figure>
+  <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">&#39;osVersion&#39;</span><span class="p">]</span></code></pre></div>
 
 <p>outputs:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Supported Devices
+<pre><code>Supported Devices
   Samsung Galaxy S5 4.4.2
   Samsung Galaxy S5 &gt;=5.0
   Samsung Galaxy S5 4.4.4
   Samsung Galaxy S4  *
 </code></pre>
-</div>
 
 <div id="apiEnvironments" class="group">
   <h3>List Environments for an Application</h3>
@@ -258,33 +255,32 @@
 
 <h4 id="url-1">URL</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>GET https://senseai.io/api/v2/user/:user_id/application/:application_id/environments
+<pre><code>GET https://senseai.io/api/v2/user/:user_id/application/:application_id/environments
 </code></pre>
-</div>
 
 <h4 id="response-1">Response</h4>
 
 <p>example response message</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"63d41b25c634c6aef3852d3ecd03879e.FED2E1F1F1CE09667A891A55E1E7D1DA"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"updated"</span><span class="p">:</span><span class="w"> </span><span class="mi">1445871149421</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"t0lte"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"device_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2bb9f350-4203-11e5-b07c-71c60df92d2d"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"sdk_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.6.0"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"api_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"63d41b25c634c6aef3852d3ecd03879e"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FED2E1F1F1CE09667A891A55E1E7D1DA"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1445867995878</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"commercial_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Samsung Galaxy Note2"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"os_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.1.2"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="err">...</span><span class="w">
-</span><span class="p">]</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;63d41b25c634c6aef3852d3ecd03879e.FED2E1F1F1CE09667A891A55E1E7D1DA&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;updated&quot;</span><span class="p">:</span> <span class="mi">1445871149421</span><span class="p">,</span>
+    <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;t0lte&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;device_id&quot;</span><span class="p">:</span> <span class="s2">&quot;2bb9f350-4203-11e5-b07c-71c60df92d2d&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;sdk_version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.6.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;api_key&quot;</span><span class="p">:</span> <span class="s2">&quot;63d41b25c634c6aef3852d3ecd03879e&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;client_id&quot;</span><span class="p">:</span> <span class="s2">&quot;FED2E1F1F1CE09667A891A55E1E7D1DA&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mi">1445867995878</span><span class="p">,</span>
+    <span class="nt">&quot;commercial_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Samsung Galaxy Note2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;os_version&quot;</span><span class="p">:</span> <span class="s2">&quot;4.1.2&quot;</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span></code></pre></div>
 
 <h4 id="example">Example</h4>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">'{}/api/v2/user/_/application/{}/environments'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environments&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">)</span>
 
 <span class="n">environment_ids</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -293,23 +289,23 @@
   <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">))</span>
 
   <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
 
   <span class="n">body</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-  <span class="n">environment_ids</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">e</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">body</span><span class="p">[</span><span class="s">'message'</span><span class="p">][</span><span class="s">'environments'</span><span class="p">]</span> <span class="p">]</span>
+  <span class="n">environment_ids</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">e</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">body</span><span class="p">[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;environments&#39;</span><span class="p">]</span> <span class="p">]</span>
 
-  <span class="k">if</span> <span class="s">'next'</span> <span class="ow">in</span> <span class="n">body</span><span class="p">[</span><span class="s">'links'</span><span class="p">]:</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s">'links'</span><span class="p">][</span><span class="s">'next'</span><span class="p">]</span>
+  <span class="k">if</span> <span class="s">&#39;next&#39;</span> <span class="ow">in</span> <span class="n">body</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]:</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="s">&#39;next&#39;</span><span class="p">]</span>
   <span class="k">else</span><span class="p">:</span>
     <span class="k">break</span>
 
 <span class="k">for</span> <span class="n">e_id</span> <span class="ow">in</span> <span class="n">environment_ids</span><span class="p">:</span>
-  <span class="k">print</span> <span class="n">e_id</span></code></pre></figure>
+  <span class="k">print</span> <span class="n">e_id</span></code></pre></div>
 
 <p>outputs:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>63d41b25c634c6aef3852d3ecd03879e.0107D0DF2157D7EC4552C1B0D6A691BF
+<pre><code>63d41b25c634c6aef3852d3ecd03879e.0107D0DF2157D7EC4552C1B0D6A691BF
 63d41b25c634c6aef3852d3ecd03879e.117D788E7A5A61DD32BBF4619F73AFA5
 63d41b25c634c6aef3852d3ecd03879e.2C49FD6AB5C58975961B18E773097646
 63d41b25c634c6aef3852d3ecd03879e.8E3B20F445235E6DB92C132D5408B6E4
@@ -318,7 +314,6 @@
 63d41b25c634c6aef3852d3ecd03879e.A5BADB55D70CFA1D7B33A34F99AD44DD
 ...
 </code></pre>
-</div>
 
 <div id="apiQueryData" class="group">
   <h3>Query Data from an Environment in an Application</h3>
@@ -327,9 +322,8 @@
 
 <h4 id="url-2">URL</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>GET https://senseai.io/api/v2/user/:user_id/application/:application_id/environment/:environment_id/data
+<pre><code>GET https://senseai.io/api/v2/user/:user_id/application/:application_id/environment/:environment_id/data
 </code></pre>
-</div>
 
 <h4 id="options-1">Options</h4>
 
@@ -364,55 +358,55 @@
 
 <p>example response message:</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"environment_id"</span><span class="p">:</span><span class="s2">"63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"time"</span><span class="p">:</span><span class="s2">"2015-10-26T18:38:05.136Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"location"</span><span class="p">:{</span><span class="w">
-       </span><span class="nt">"longitude"</span><span class="p">:</span><span class="mf">3.6662295</span><span class="p">,</span><span class="w">
-       </span><span class="nt">"latitude"</span><span class="p">:</span><span class="mf">43.3977541</span><span class="p">,</span><span class="w">
-       </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="mf">35.19900131225586</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"derived_sensors"</span><span class="p">:{</span><span class="w">
-      </span><span class="nt">"temperature"</span><span class="p">:{</span><span class="w">
-        </span><span class="nt">"value"</span><span class="p">:</span><span class="mf">20.622745768229166</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"confidence"</span><span class="p">:</span><span class="mf">0.9999999963628308</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"normalized_sensors"</span><span class="p">:{</span><span class="w">
-      </span><span class="nt">"lux"</span><span class="p">:{</span><span class="w">
-        </span><span class="nt">"value"</span><span class="p">:</span><span class="mf">0.36372525855</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"raw_sensors"</span><span class="p">:{</span><span class="w">
-      </span><span class="nt">"average_sman_pressure"</span><span class="p">:{</span><span class="w">
-        </span><span class="nt">"value"</span><span class="p">:</span><span class="mf">1012.5</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-    </span><span class="err">}</span><span class="w">
-    </span><span class="s2">"average_sman_humidity"</span><span class="err">:</span><span class="p">{</span><span class="w">
-      </span><span class="nt">"value"</span><span class="p">:</span><span class="mf">73.55426205721768</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="err">...</span><span class="w">
-</span><span class="p">]</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;environment_id&quot;</span><span class="p">:</span><span class="s2">&quot;63d41b25c634c6aef3852d3ecd03879e.E668B385B50BE3ED3B4A128F6A3D2455&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;2015-10-26T18:38:05.136Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;location&quot;</span><span class="p">:{</span>
+       <span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="mf">3.6662295</span><span class="p">,</span>
+       <span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="mf">43.3977541</span><span class="p">,</span>
+       <span class="nt">&quot;accuracy&quot;</span><span class="p">:</span><span class="mf">35.19900131225586</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;derived_sensors&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;temperature&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">20.622745768229166</span><span class="p">,</span>
+        <span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="mf">0.9999999963628308</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;normalized_sensors&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;lux&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">0.36372525855</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;raw_sensors&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;average_sman_pressure&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">1012.5</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="s2">&quot;average_sman_humidity&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">73.55426205721768</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span></code></pre></div>
 
 <h4 id="example-1">Example 1</h4>
 
 <p>Get Most Recent Data</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">'{}/api/v2/user/_/application/{}/environment/{}/data'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environment/{}/data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span> <span class="p">)</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
-  <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'an error occurred'</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occurred&#39;</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'message'</span><span class="p">][</span><span class="s">'data'</span><span class="p">]:</span>
-  <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span> <span class="o">+</span> <span class="s">'</span><span class="se">\t\t</span><span class="s">'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'derived_sensors'</span><span class="p">][</span><span class="s">'temperature'</span><span class="p">][</span><span class="s">'value'</span><span class="p">])</span></code></pre></figure>
+<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]:</span>
+  <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;derived_sensors&#39;</span><span class="p">][</span><span class="s">&#39;temperature&#39;</span><span class="p">][</span><span class="s">&#39;value&#39;</span><span class="p">])</span></code></pre></div>
 
 <p>outputs:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>2015-10-27T00:11:55.922Z		24.3639510091
+<pre><code>2015-10-27T00:11:55.922Z		24.3639510091
 2015-10-27T00:11:45.426Z		24.5896988932
 2015-10-27T00:11:34.938Z		24.4411124674
 2015-10-27T00:11:24.438Z		24.2773323568
@@ -423,13 +417,12 @@
 2015-10-27T00:10:31.935Z		24.5652490234
 
 </code></pre>
-</div>
 
 <h4 id="example-2">Example 2</h4>
 
 <p>Page Through All Data</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">'{}/api/v2/user/_/application/{}/environment/{}/data'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environment/{}/data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -438,43 +431,43 @@
   <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span> <span class="p">)</span>
 
   <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'an error occured'</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occured&#39;</span><span class="p">)</span>
 
-  <span class="n">dataCollection</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'message'</span><span class="p">][</span><span class="s">'data'</span><span class="p">]</span>
+  <span class="n">dataCollection</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
 
   <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataCollection</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
     <span class="k">break</span>
 
   <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataCollection</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span> <span class="o">+</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'derived_sensors'</span><span class="p">][</span><span class="s">'temperature'</span><span class="p">][</span><span class="s">'value'</span><span class="p">])</span>
+    <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;derived_sensors&#39;</span><span class="p">][</span><span class="s">&#39;temperature&#39;</span><span class="p">][</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
 
-  <span class="n">params</span><span class="p">[</span><span class="s">'end'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span></code></pre></figure>
+  <span class="n">params</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span></code></pre></div>
 
 <h4 id="example-3">Example 3</h4>
 
 <p>Poll For Data</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">'{}/api/v2/user/_/application/{}/environment/{}/data'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/api/v2/user/_/application/{}/environment/{}/data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span><span class="n">api_key</span><span class="p">,</span><span class="n">environment_id</span><span class="p">)</span>
 
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">"order"</span><span class="p">:</span> <span class="s">"ascending"</span><span class="p">,</span>
-          <span class="s">"start"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="p">}</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="s">&quot;ascending&quot;</span><span class="p">,</span>
+          <span class="s">&quot;start&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="p">}</span>
 
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
   <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span> <span class="p">)</span>
 
   <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'an error occured'</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occured&#39;</span><span class="p">)</span>
 
-  <span class="n">dataCollection</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'message'</span><span class="p">][</span><span class="s">'data'</span><span class="p">]</span>
+  <span class="n">dataCollection</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
 
   <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataCollection</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span> <span class="o">+</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'derived_sensors'</span><span class="p">][</span><span class="s">'temperature'</span><span class="p">][</span><span class="s">'value'</span><span class="p">])</span>
+    <span class="k">print</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;derived_sensors&#39;</span><span class="p">][</span><span class="s">&#39;temperature&#39;</span><span class="p">][</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
 
 
   <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataCollection</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">params</span><span class="p">[</span><span class="s">'start'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span>
 
-  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">15</span><span class="p">)</span> <span class="c"># pause 15 minutes and poll again</span></code></pre></figure>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">15</span><span class="p">)</span> <span class="c"># pause 15 minutes and poll again</span></code></pre></div>
 
 <div id="apiApplicationInfo" class="group">
   <h3>Get Application Info</h3>
@@ -483,26 +476,25 @@
 
 <h4 id="url-3">URL</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>GET https://senseai.io/api/v2/user/:user_id/application/:application_id
+<pre><code>GET https://senseai.io/api/v2/user/:user_id/application/:application_id
 </code></pre>
-</div>
 
 <h4 id="response-3">Response</h4>
 
 <p>example response message</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nt">"application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Foo"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"api_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a673b59c13f703a461bfd3b4e7244302"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f507b1fa6bb4916b555816e89e7cea03"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"configuration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"master_switch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"collection_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"post_diagnostic_data"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;application&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;api_key&quot;</span><span class="p">:</span> <span class="s2">&quot;a673b59c13f703a461bfd3b4e7244302&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="s2">&quot;f507b1fa6bb4916b555816e89e7cea03&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;master_switch&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;collection_rate&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;post_diagnostic_data&quot;</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 
 <h3 id="change-application-level-remote-configuration">Change Application-Level Remote Configuration</h3>
 
@@ -510,19 +502,18 @@
 
 <h4 id="url-4">URL</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>PUT https://senseai.io/api/v2/user/:user_id/application/:application_id/configure
+<pre><code>PUT https://senseai.io/api/v2/user/:user_id/application/:application_id/configure
 </code></pre>
-</div>
 
 <h4 id="request-body">Request Body</h4>
 
 <p>example request body</p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nt">"master_switch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"collection_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"post_diagnostic_data"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;master_switch&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;collection_rate&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="nt">&quot;post_diagnostic_data&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></div>
 
 <div id="sdkDocumentation" class="group">
   <h1>SDK Documentation</h1>
@@ -593,57 +584,55 @@
 <ul>
    <li>Your project structure should include the following directories: Project-Dir/app/<b>libs/</b></li>
    <li>Add the following file to the <b>/libs</b> directory: <b>kelvinsdk-production-onlinesdk-release-0.7.0.aar</b> </li>
-  
+
   </ul>
 <li>Setup project in Gradle</li>
    <ul>
    <li>Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.</li>
    <li>Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
     
-<figure class="highlight"><pre><code class="language-groovy" data-lang="groovy">    <span class="n">android</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">android</span> <span class="o">{</span>
       <span class="n">packagingOptions</span> <span class="o">{</span>
-          <span class="n">exclude</span> <span class="s1">'META-INF/LICENSE.txt'</span>
+          <span class="n">exclude</span> <span class="s1">&#39;META-INF/LICENSE.txt&#39;</span>
       <span class="o">}</span>
       <span class="n">repositories</span> <span class="o">{</span>
           <span class="n">flatDir</span> <span class="o">{</span>
-              <span class="n">dirs</span> <span class="s1">'libs'</span>
+              <span class="n">dirs</span> <span class="s1">&#39;libs&#39;</span>
           <span class="o">}</span>
       <span class="o">}</span>
     <span class="o">}</span>
 
     <span class="n">dependencies</span> <span class="o">{</span>
-        <span class="n">compile</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">'libs'</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">'*.jar'</span><span class="o">])</span>
-        <span class="n">compile</span> <span class="s1">'com.android.support:appcompat-v7:21.0.3'</span>
-        <span class="n">compile</span> <span class="o">(</span><span class="nl">name:</span><span class="s1">'kelvinsdk-onlinesdk-release-prod-0-6-0'</span><span class="o">,</span> <span class="nl">ext:</span><span class="s1">'aar'</span><span class="o">)</span>
-        <span class="n">compile</span> <span class="s1">'org.apache.commons:commons-math3:3.3'</span>
-        <span class="n">compile</span> <span class="s1">'com.google.code.gson:gson:2.3.1'</span>
-        <span class="n">compile</span> <span class="s1">'com.github.zafarkhaja:java-semver:0.9.0'</span>
-        <span class="n">compile</span> <span class="s1">'com.koushikdutta.ion:ion:2.1.3'</span>
-        <span class="n">compile</span> <span class="s1">'com.google.android.gms:play-services-base:7.0.0'</span>
-        <span class="n">compile</span> <span class="s1">'com.google.android.gms:play-services-location:7.0.0'</span>
-    <span class="o">}</span>
-    </code></pre></figure>
+        <span class="n">compile</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;libs&#39;</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.android.support:appcompat-v7:21.0.3&#39;</span>
+        <span class="n">compile</span> <span class="o">(</span><span class="nl">name:</span><span class="s1">&#39;kelvinsdk-onlinesdk-release-prod-0-6-0&#39;</span><span class="o">,</span> <span class="nl">ext:</span><span class="s1">&#39;aar&#39;</span><span class="o">)</span>
+        <span class="n">compile</span> <span class="s1">&#39;org.apache.commons:commons-math3:3.3&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.google.code.gson:gson:2.3.1&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.github.zafarkhaja:java-semver:0.9.0&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.koushikdutta.ion:ion:2.1.3&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.google.android.gms:play-services-base:7.0.0&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.google.android.gms:play-services-location:7.0.0&#39;</span>
+    <span class="o">}</span></code></pre></div>
 
   </li>
   </ul>
 
 <li> Manifest setup </li>
-    <ul> 
+    <ul>
     <li> Add the following lines (in bold) to your AndroidManifest.xml file:
 
     
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;manifest</span>
-      <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-      <span class="na">package=</span><span class="s">"com.example.app"</span> <span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest</span>
+      <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+      <span class="na">package=</span><span class="s">&quot;com.example.app&quot;</span> <span class="nt">&gt;</span>
 
-      <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.ACCESS_FINE_LOCATION"</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.INTERNET"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.ACCESS_FINE_LOCATION&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span>
 
       <span class="nt">&lt;application</span> <span class="err">android</span> <span class="na">:name=</span><span class="s">”.Your</span> <span class="err">Application</span> <span class="err">Class</span> <span class="err">Name”</span> <span class="nt">&gt;</span>
         ...
       <span class="nt">&lt;/application&gt;</span>
-    <span class="nt">&lt;/manifest&gt;</span>
-    </code></pre></figure>
+    <span class="nt">&lt;/manifest&gt;</span></code></pre></div>
 
 
 
@@ -661,276 +650,7 @@
   <a class="headerlink" href="#sdkPublicApi"></a>
 </div>
 
-<!-- NewPage -->
-<html lang="en">
-<head>
-<!-- Generated by javadoc (version 1.7.0_79) on Mon Nov 30 17:31:20 CST 2015 -->
-<title>KelvinInit</title>
-<meta name="date" content="2015-11-30" />
-</head>
-<body>
-<!-- ======== START OF CLASS DATA ======== -->
-<div class="header">
-<div class="subTitle">io.senseai.kelvinsdk</div>
-<h2 title="Class KelvinInit" class="title">Class KelvinInit</h2>
-</div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>io.senseai.kelvinsdk.KelvinInit</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<hr />
-<br />
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.ConnectionCallbacks.html" title="interface in io.senseai.kelvinsdk">KelvinInit.ConnectionCallbacks</a></strong></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.ControlCallbacks.html" title="interface in io.senseai.kelvinsdk">KelvinInit.ControlCallbacks</a></strong></code>&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-
-<!-- ========== METHOD SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="method_summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect</a></strong>(java.lang.String&nbsp;apiKey,
-       java.lang.String&nbsp;developerId,
-       <a href="../../../io/senseai/kelvinsdk/KelvinInit.ConnectionCallbacks.html" title="interface in io.senseai.kelvinsdk">KelvinInit.ConnectionCallbacks</a>&nbsp;connectionCallback)</code>
-<div class="block">This method will create a connection to the SDK.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#getDataMode()">getDataMode</a></strong>()</code>
-<div class="block">Returns the current operating mode of the SDK or null if the SDK isn't running.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../io/senseai/kelvinsdk/KelvinInit.html" title="class in io.senseai.kelvinsdk">KelvinInit</a></code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#getInstance(Context)">getInstance</a></strong>(Context&nbsp;context)</code>
-<div class="block">set
- Returns a KelvinInit object that is used to call the public facing methods of the SDK.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#getPin()">getPin</a></strong>()</code>
-<div class="block">This is an asynchronous call to get a personal identification number (PIN) from the SenseAI
- servers.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#isCompatible()">isCompatible</a></strong>()</code>
-<div class="block">This method returns the compatibility state of the SDK.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#isConnected()">isConnected</a></strong>()</code>
-<div class="block">This method returns the connected state of the SDK.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#isConnecting()">isConnecting</a></strong>()</code>
-<div class="block">This method returns the connecting state of the SDK.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#setControlCallback(io.senseai.kelvinsdk.KelvinInit.ControlCallbacks)">setControlCallback</a></strong>(<a href="../../../io/senseai/kelvinsdk/KelvinInit.ControlCallbacks.html" title="interface in io.senseai.kelvinsdk">KelvinInit.ControlCallbacks</a>&nbsp;controlCallback)</code>
-<div class="block">This method is used to set a listener for certain SDK events.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../io/senseai/kelvinsdk/KelvinInit.html#setDataMode(io.senseai.kelvinsdk.OperatingMode)">setDataMode</a></strong>(io.senseai.kelvinsdk.OperatingMode&nbsp;mode)</code>
-<div class="block">This method sets the data mode and starts the SDK if it is not currently running.</div>
-</td>
-</tr>
-</table>
-
-
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
-
-<!-- ============ METHOD DETAIL ========== -->
-<ul class="blockList">
-<li class="blockList"><a name="method_detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a name="getInstance(Context)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getInstance</h4>
-<pre>public static&nbsp;<a href="../../../io/senseai/kelvinsdk/KelvinInit.html" title="class in io.senseai.kelvinsdk">KelvinInit</a>&nbsp;getInstance(Context&nbsp;context)</pre>
-<div class="block">set
- Returns a KelvinInit object that is used to call the public facing methods of the SDK. This
- also initiates authentication of the SDK. This method returns a single instance and should
- always be called from the UI thread.
- <p>
- This method always returns a KelvinInit object immediately, however the authentication
- operation is asynchronous and you must wait for it to complete before proceeding. The
- ConnectionCallbacks interface that is included as an argument has 3 methods that signal when
- the authentication step is complete or has failed.
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - the context from your application</dd>
-<dt><span class="strong">Returns:</span></dt><dd></dd></dl>
-
-
-<a name="connect(java.lang.String, java.lang.String, io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connect</h4>
-<pre>public&nbsp;void&nbsp;connect(java.lang.String&nbsp;apiKey,
-           java.lang.String&nbsp;developerId,
-           <a href="../../../io/senseai/kelvinsdk/KelvinInit.ConnectionCallbacks.html" title="interface in io.senseai.kelvinsdk">KelvinInit.ConnectionCallbacks</a>&nbsp;connectionCallback)</pre>
-<div class="block">This method will create a connection to the SDK. This method executed asynchronously. The result
- of this method is returned via the ConnectionCallbacks interface. Once this method has been called
- wait until a response is received in the ConnectionCallbacks before proceeding.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>apiKey</code> - </dd><dd><code>developerId</code> - </dd><dd><code>connectionCallback</code> - </dd></dl>
-</li>
-</ul>
-<a name="isConnecting()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isConnecting</h4>
-<pre>public&nbsp;boolean&nbsp;isConnecting()</pre>
-<div class="block">This method returns the connecting state of the SDK. If the SDK is in the proess of authenticating
- this will return true. If the SDK has not started authenticating or is finished this will return false.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd></dd></dl>
-</li>
-</ul>
-<a name="isCompatible()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isCompatible</h4>
-<pre>public&nbsp;boolean&nbsp;isCompatible()</pre>
-<div class="block">This method returns the compatibility state of the SDK. This defaults to false and can only be set to true
- after the isConnected method returns true. Calling this without first calling isConnected() is
- not advised as you might think the device is compatible when in reality it is compatible
- it just hasn't connected yet.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd></dd></dl>
-</li>
-</ul>
-<a name="isConnected()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isConnected</h4>
-<pre>public&nbsp;boolean&nbsp;isConnected()</pre>
-<div class="block">This method returns the connected state of the SDK. If the SDK is connected and compatible
- then this will return true, else false. Defaults to false.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd></dd></dl>
-</li>
-</ul>
-<a name="setDataMode(io.senseai.kelvinsdk.OperatingMode)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDataMode</h4>
-<pre>public&nbsp;void&nbsp;setDataMode(io.senseai.kelvinsdk.OperatingMode&nbsp;mode)</pre>
-<div class="block">This method sets the data mode and starts the SDK if it is not currently running.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>mode</code> - the operating mode that the SDK should be set to.</dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - if SDK is not authenticated before call is made</dd></dl>
-</li>
-</ul>
-<a name="getDataMode()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDataMode</h4>
-<pre>public&nbsp;void&nbsp;getDataMode()</pre>
-<div class="block">Returns the current operating mode of the SDK or null if the SDK isn't running.
-
- The result is returned to the ControlCallback.onModeFetched() callback</div>
-</li>
-</ul>
-<a name="getPin()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPin</h4>
-<pre>public&nbsp;void&nbsp;getPin()</pre>
-<div class="block">This is an asynchronous call to get a personal identification number (PIN) from the SenseAI
- servers. The PIN is returned in the ControlCallback.onPinFetched() callback
- or ControlCallback.onPinFetchFailed() callback. The PIN can be used to register a specific
- device with the servers so that data generated by that device can be viewed in a web portal.</div>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code>java.lang.IllegalStateException</code> - if SDK is not authenticated before call is made</dd></dl>
-</li>
-</ul>
-<a name="setControlCallback(io.senseai.kelvinsdk.KelvinInit.ControlCallbacks)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>setControlCallback</h4>
-<pre>public&nbsp;void&nbsp;setControlCallback(<a href="../../../io/senseai/kelvinsdk/KelvinInit.ControlCallbacks.html" title="interface in io.senseai.kelvinsdk">KelvinInit.ControlCallbacks</a>&nbsp;controlCallback)</pre>
-<div class="block">This method is used to set a listener for certain SDK events. The listener will return results
- when getPin() is called or when getDataMode() is called.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>controlCallback</code> - </dd></dl>
-</li>
-</ul>
-
-
-
-
-<!-- ========= END OF CLASS DATA ========= -->
-
-
-</p></div></li></ul></li></ul></li></ul></div></li></ul></li></ul></div></li></ul></div></div></body></html>
+<p><a class="" href="/Archive/index.html">SDK Documentation</a></p>
 
         </section>
 
