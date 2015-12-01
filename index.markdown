@@ -526,24 +526,28 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
   <a class="headerlink" href="#sdkGetStarted"></a>
 </div>
 
-1. Register for API key and Developer id
-   1. Create an account <a href="https://senseai.io/home/products_and_services">here:</a>
-   2. Log In to get your developer id.
-   3. Generate an API key using your app’s package name. Note, if the package name ever changes, you must retrieve a new API key.
-2. Add library files to your project
-   1. Your project structure should include the following directories
-      Project-Dir/app/<b>libs</b>
-
-      Add the following file to the <b>libs</b> directory
-
-      <b>kelvinsdk-production-onlinesdk-release-0.7.0<b/>
-3. Setup project in Gradle
-   1. Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.
-   2. Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
+<ol>
+<li> Register for API key and Developer id</li>
+ <ul>
+   <li>Create an account <a href="https://senseai.io/home/products_and_services">here:</a></li>
+   <li>Log In to get your developer id.</li>
+   <li>Generate an API key using your app’s package name. Note, if the package name ever changes, you must retrieve a new API key.</li>
+ </ul>
+<li>Add library files to your project</li>
+<ul>
+   <li>Your project structure should include the following directories: Project-Dir/app/<b>libs/</b></li>
+   <li>Add the following file to the <b>/libs</b> directory: <b>kelvinsdk-production-onlinesdk-release-0.7.0.aar</b> </li>
+  
+  </ul>
+<li>Setup project in Gradle</li>
+   <ul>
+   <li>Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.</li>
+   <li>Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
     {% highlight groovy %}
+
     android {
       packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
+          exclude 'META-INF/LICENSE.txt'
       }
       repositories {
           flatDir {
@@ -551,24 +555,29 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
           }
       }
     }
-      dependencies {
-      compile fileTree(dir: 'libs', include: ['*.jar'])
-      compile 'com.android.support:appcompat-v7:21.0.3'
-      compile (name:'kelvinsdk-onlinesdk-release-prod-0-6-0', ext:'aar')
-      compile 'org.apache.commons:commons-math3:3.3'
-      compile 'com.google.code.gson:gson:2.3.1'
-      compile 'com.github.zafarkhaja:java-semver:0.9.0'
-      compile 'com.koushikdutta.ion:ion:2.1.3'
-      compile 'com.google.android.gms:play-services-base:7.0.0'
-      compile 'com.google.android.gms:play-services-location:7.0.0'
-    } 
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        compile 'com.android.support:appcompat-v7:21.0.3'
+        compile (name:'kelvinsdk-onlinesdk-release-prod-0-6-0', ext:'aar')
+        compile 'org.apache.commons:commons-math3:3.3'
+        compile 'com.google.code.gson:gson:2.3.1'
+        compile 'com.github.zafarkhaja:java-semver:0.9.0'
+        compile 'com.koushikdutta.ion:ion:2.1.3'
+        compile 'com.google.android.gms:play-services-base:7.0.0'
+        compile 'com.google.android.gms:play-services-location:7.0.0'
+    }
     {% endhighlight %}
-4. Manifest setup
-   1. Add the following lines (in bold) to your AndroidManifest.xml file:
+  </li>
+  </ul>
+
+<li> Manifest setup </li>
+    <ul> 
+    <li> Add the following lines (in bold) to your AndroidManifest.xml file:
+
     {% highlight xml %}
-    <manifest 
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.example.app" >
+
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.app" >
 
       <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
       <uses-permission android:name="android.permission.INTERNET" />
@@ -579,7 +588,11 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
     </manifest>
     {% endhighlight %}
 
-  <b>*Note if you’re not extending the application class you can disregard the android:name=”.Your Application Class Name” line.</b>
-
-  5. Setup complete
-     1. Your project is not setup to run the SDK and resolve the SDK's dependencies
+   * <b>Note if you’re not extending the application class you can disregard the android:name=”my.applicationclass.name” line.</b>
+   </li>
+   </ul>
+<li>Setup complete</li>
+  <ul>
+     <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
+   </ul>
+</ol>
