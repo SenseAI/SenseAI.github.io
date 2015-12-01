@@ -444,7 +444,10 @@ example response message
 }
 {% endhighlight %}
 
-### Change Application-Level Remote Configuration
+<div id="apiRemoteConfig" class="group">
+  <h3>Remote Configuration</h3>
+  <a class="headerlink" href="#apiRemoteConfig"></a>
+</div>
 
 Certain SDK parameters can be adjusted in the field, this should be done using the following:
 
@@ -468,7 +471,10 @@ example request body
 {% endhighlight %}
 
 
-### Application Level Geo Bounds Info
+<div id="apiGeoBound" class="group">
+  <h3>Application Level Geo Bounds</h3>
+  <a class="headerlink" href="#apiGeoBound"></a>
+</div>
 
 Get the bounding box for recent data in an application.
 
@@ -493,7 +499,12 @@ GET /api/v2/user/:user_id/application/:application_id/data/geo/bounds
 }
 {% endhighlight %}
 
-### Application Level Geo Query
+<div id="apiGeoQuery" class="group">
+  <h3>Application Level Geo Query</h3>
+  <a class="headerlink" href="#apiGeoQuery"></a>
+</div>
+
+Application Level Geo Bounds Info
 
 Get most recent data for an application for a specified region.  Return is a list of datapoints with environment information populated.
 

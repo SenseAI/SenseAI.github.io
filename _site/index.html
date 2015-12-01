@@ -496,7 +496,10 @@
   <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
 
-<h3 id="change-application-level-remote-configuration">Change Application-Level Remote Configuration</h3>
+<div id="apiRemoteConfig" class="group">
+  <h3>Remote Configuration</h3>
+  <a class="headerlink" href="#apiRemoteConfig"></a>
+</div>
 
 <p>Certain SDK parameters can be adjusted in the field, this should be done using the following:</p>
 
@@ -515,6 +518,77 @@
   <span class="nt">&quot;post_diagnostic_data&quot;</span><span class="p">:</span> <span class="kc">false</span>
 <span class="p">}</span></code></pre></div>
 
+<div id="apiGeoBound" class="group">
+  <h3>Application Level Geo Bounds</h3>
+  <a class="headerlink" href="#apiGeoBound"></a>
+</div>
+
+<p>Get the bounding box for recent data in an application.</p>
+
+<h4 id="url-5">URL</h4>
+
+<pre><code>GET /api/v2/user/:user_id/application/:application_id/data/geo/bounds
+</code></pre>
+
+<h4 id="response-4">Response</h4>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">37.32581779360771</span><span class="p">,</span>
+    <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">-122.02696233987808</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">44.95370104908943</span><span class="p">,</span>
+    <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">-77.26228326559067</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<div id="apiGeoQuery" class="group">
+  <h3>Application Level Geo Query</h3>
+  <a class="headerlink" href="#apiGeoQuery"></a>
+</div>
+
+<p>Application Level Geo Bounds Info</p>
+
+<p>Get most recent data for an application for a specified region.  Return is a list of datapoints with environment information populated.</p>
+
+<h4 id="url-6">URL</h4>
+
+<pre><code>GET /api/v2/user/:user_id/application/:application_id/data/geo
+</code></pre>
+
+<h4 id="options-2">Options</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>latitude[0]</strong></td>
+      <td>latitude for first component of bounding box</td>
+    </tr>
+    <tr>
+      <td><strong>longitude[0]</strong></td>
+      <td>longitude for first component of bounding box</td>
+    </tr>
+    <tr>
+      <td><strong>latitude[1]</strong></td>
+      <td>latitude for second component of bounding box</td>
+    </tr>
+    <tr>
+      <td><strong>longitude[1]</strong></td>
+      <td>longitude for second component of bounding box</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-5">Response</h4>
+
+<p>A list of data with environment info populated</p>
 
         </section>
 
@@ -541,6 +615,9 @@
                             <li><a href="#apiEnvironments">List Environments for an Application</a></li>
                             <li><a href="#apiQueryData">Query Data from an Environment in an Application</a></li>
                             <li><a href="#apiApplicationInfo">Get Application Info</a></li>
+                            <li><a href="#apiRemoteConfig">Remote Configuration</a></li>
+                            <li><a href="#apiGeoBound">Application Level Geo Bounds</a></li>
+                            <li><a href="#apiGeoQuery">Application Level Geo Query</a></li>
                         </ul>
                     </li>
                 </ul>
