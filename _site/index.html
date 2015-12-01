@@ -580,7 +580,6 @@
     <h2 class="page-header">Get Started</h2>
   <a class="headerlink" href="#sdkGetStarted"></a>
 </div>
-<p>«««&lt; HEAD</p>
 
 <ol>
 <li> Register for API key and Developer id</li>
@@ -599,22 +598,6 @@
    <ul>
    <li>Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.</li>
    <li>Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
-=======
-1. Register for API key and Developer id
-   1. Create an account <a href="https://senseai.io/home/products_and_services">here:</a>
-   2. Log In to get your developer id.
-   3. Generate an API key using your app’s package name. Note, if the package name ever changes, you must retrieve a new API key.
-2. Add library files to your project
-   1. Your project structure should include the following directories
-      Project-Dir/app/<b>libs</b>
-
-      Add the following file to the <b>libs</b> directory
-
-      <b>kelvinsdk-production-onlinesdk-release-0.7.0<b />
-3. Setup project in Gradle
-   1. Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.
-   2. Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d949522bfb181ad537523f71af88831e6843c2df
     
 <figure class="highlight"><pre><code class="language-groovy" data-lang="groovy">    <span class="n">android</span> <span class="o">{</span>
       <span class="n">packagingOptions</span> <span class="o">{</span>
@@ -626,7 +609,7 @@
           <span class="o">}</span>
       <span class="o">}</span>
     <span class="o">}</span>
-<span class="o">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="n">HEAD</span>
+
     <span class="n">dependencies</span> <span class="o">{</span>
         <span class="n">compile</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">'libs'</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">'*.jar'</span><span class="o">])</span>
         <span class="n">compile</span> <span class="s1">'com.android.support:appcompat-v7:21.0.3'</span>
@@ -637,38 +620,20 @@
         <span class="n">compile</span> <span class="s1">'com.koushikdutta.ion:ion:2.1.3'</span>
         <span class="n">compile</span> <span class="s1">'com.google.android.gms:play-services-base:7.0.0'</span>
         <span class="n">compile</span> <span class="s1">'com.google.android.gms:play-services-location:7.0.0'</span>
-<span class="o">=======</span>
-      <span class="n">dependencies</span> <span class="o">{</span>
-      <span class="n">compile</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">'libs'</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">'*.jar'</span><span class="o">])</span>
-      <span class="n">compile</span> <span class="s1">'com.android.support:appcompat-v7:21.0.3'</span>
-      <span class="n">compile</span> <span class="o">(</span><span class="nl">name:</span><span class="s1">'kelvinsdk-onlinesdk-release-prod-0-6-0'</span><span class="o">,</span> <span class="nl">ext:</span><span class="s1">'aar'</span><span class="o">)</span>
-      <span class="n">compile</span> <span class="s1">'org.apache.commons:commons-math3:3.3'</span>
-      <span class="n">compile</span> <span class="s1">'com.google.code.gson:gson:2.3.1'</span>
-      <span class="n">compile</span> <span class="s1">'com.github.zafarkhaja:java-semver:0.9.0'</span>
-      <span class="n">compile</span> <span class="s1">'com.koushikdutta.ion:ion:2.1.3'</span>
-      <span class="n">compile</span> <span class="s1">'com.google.android.gms:play-services-base:7.0.0'</span>
-      <span class="n">compile</span> <span class="s1">'com.google.android.gms:play-services-location:7.0.0'</span>
-<span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="n">d949522bfb181ad537523f71af88831e6843c2df</span>
     <span class="o">}</span>
     </code></pre></figure>
 
-  
-  
+  </li>
+  </ul>
 
 <li> Manifest setup </li>
     <ul> 
     <li> Add the following lines (in bold) to your AndroidManifest.xml file:
 
     
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;</span><span class="nt">&lt; HEAD</span>
-
-    <span class="err">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">package=</span><span class="s">"com.example.app"</span> <span class="nt">&gt;</span>
-=======
-    <span class="nt">&lt;manifest</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;manifest</span>
       <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
       <span class="na">package=</span><span class="s">"com.example.app"</span> <span class="nt">&gt;</span>
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d949522bfb181ad537523f71af88831e6843c2df
 
       <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.ACCESS_FINE_LOCATION"</span> <span class="nt">/&gt;</span>
       <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.INTERNET"</span> <span class="nt">/&gt;</span>
@@ -680,7 +645,7 @@
     </code></pre></figure>
 
 
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+
    * <b>Note if you’re not extending the application class you can disregard the android:name=”my.applicationclass.name” line.</b>
    </li>
    </ul>
@@ -688,14 +653,7 @@
   <ul>
      <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
-
-=======
-  <b>*Note if you’re not extending the application class you can disregard the android:name=”.Your Application Class Name” line.</b>
-
-  5. Setup complete
-     1. Your project is not setup to run the SDK and resolve the SDK's dependencies
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d949522bfb181ad537523f71af88831e6843c2df
-</b></li></ul></ol>
+</ol>
 
         </section>
 
