@@ -598,7 +598,6 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
   <ul>
      <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
-</ol>
 
 <li>Proguard Configuration</li>
 <ul>
@@ -633,6 +632,8 @@ proguard file that will need to be specified to be used during your build:
 
 </li>
 </ul>
+</ol>
+
 
 <div id="sdkPublicApi" class="publicApi">
     <h2 class="page-header">Public API</h2>
