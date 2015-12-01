@@ -480,7 +480,7 @@ example request body
 
 #### Introduction
 
-This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support. 
+This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support.
 
 #### What does the SDK do?
 
@@ -503,7 +503,7 @@ Measurement results are communicated from the SDK to the parent app via a Local 
 
 #### Connect to the SDK
 
-The developer accesses the SDK through a class called KelvinInit. The KelvinInit class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal. 
+The developer accesses the SDK through a class called KelvinInit. The KelvinInit class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal.
 
 To begin using the SDK the getInstance() method must be called. This method returns immediately with a reference to KelvinInit.
 
@@ -519,12 +519,13 @@ The SDK contains a public abstract class that extends WakefulBroadcastReceiver t
 
 Note that it is not necessary to initialize the Sense Ai SDK in a service. It creates a Service internally to ensure that it can outlive the class that instantiates it so the predictions can be made whether the app is in the foreground, background or has been killed. The Service is still susceptible to the OS killing it because of memory pressure, however it will automatically start again once the OS allows it.
 
-The SDK doesn’t cache predictions, it simply returns them to the parent app and the parent app can use them however it needs to.  
+The SDK doesn’t cache predictions, it simply returns them to the parent app and the parent app can use them however it needs to.
 
 <div id="sdkGetStarted" class="group">
     <h2 class="page-header">Get Started</h2>
   <a class="headerlink" href="#sdkGetStarted"></a>
 </div>
+<<<<<<< HEAD
 
 <ol>
 <li> Register for API key and Developer id</li>
@@ -543,6 +544,22 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
    <ul>
    <li>Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.</li>
    <li>Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
+=======
+1. Register for API key and Developer id
+   1. Create an account <a href="https://senseai.io/home/products_and_services">here:</a>
+   2. Log In to get your developer id.
+   3. Generate an API key using your app’s package name. Note, if the package name ever changes, you must retrieve a new API key.
+2. Add library files to your project
+   1. Your project structure should include the following directories
+      Project-Dir/app/<b>libs</b>
+
+      Add the following file to the <b>libs</b> directory
+
+      <b>kelvinsdk-production-onlinesdk-release-0.7.0<b/>
+3. Setup project in Gradle
+   1. Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.
+   2. Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
+>>>>>>> d949522bfb181ad537523f71af88831e6843c2df
     {% highlight groovy %}
 
     android {
@@ -555,6 +572,7 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
           }
       }
     }
+<<<<<<< HEAD
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         compile 'com.android.support:appcompat-v7:21.0.3'
@@ -565,6 +583,18 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
         compile 'com.koushikdutta.ion:ion:2.1.3'
         compile 'com.google.android.gms:play-services-base:7.0.0'
         compile 'com.google.android.gms:play-services-location:7.0.0'
+=======
+      dependencies {
+      compile fileTree(dir: 'libs', include: ['*.jar'])
+      compile 'com.android.support:appcompat-v7:21.0.3'
+      compile (name:'kelvinsdk-onlinesdk-release-prod-0-6-0', ext:'aar')
+      compile 'org.apache.commons:commons-math3:3.3'
+      compile 'com.google.code.gson:gson:2.3.1'
+      compile 'com.github.zafarkhaja:java-semver:0.9.0'
+      compile 'com.koushikdutta.ion:ion:2.1.3'
+      compile 'com.google.android.gms:play-services-base:7.0.0'
+      compile 'com.google.android.gms:play-services-location:7.0.0'
+>>>>>>> d949522bfb181ad537523f71af88831e6843c2df
     }
     {% endhighlight %}
   </li>
@@ -575,9 +605,15 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
     <li> Add the following lines (in bold) to your AndroidManifest.xml file:
 
     {% highlight xml %}
+<<<<<<< HEAD
 
     <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.app" >
+=======
+    <manifest
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.example.app" >
+>>>>>>> d949522bfb181ad537523f71af88831e6843c2df
 
       <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
       <uses-permission android:name="android.permission.INTERNET" />
@@ -588,6 +624,7 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
     </manifest>
     {% endhighlight %}
 
+<<<<<<< HEAD
    * <b>Note if you’re not extending the application class you can disregard the android:name=”my.applicationclass.name” line.</b>
    </li>
    </ul>
@@ -596,3 +633,9 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
      <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
 </ol>
+=======
+  <b>*Note if you’re not extending the application class you can disregard the android:name=”.Your Application Class Name” line.</b>
+
+  5. Setup complete
+     1. Your project is not setup to run the SDK and resolve the SDK's dependencies
+>>>>>>> d949522bfb181ad537523f71af88831e6843c2df
