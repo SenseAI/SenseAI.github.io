@@ -600,6 +600,40 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
    </ul>
 </ol>
 
+<li>Proguard Configuration</li>
+<ul>
+<li>If you are using ProGuard or DexGuard to shrink, optimize and obfuscate your source code, 
+you will need to include the following definitions either in your existing proguard file or in a new
+proguard file that will need to be specified to be used during your build:
+
+    {% highlight txt %}
+
+    -keepattributes Signature
+    -keepattributes *Annotation*
+
+    -keep class sun.misc.Unsafe { *; }
+    -keep class com.google.gson.stream.** { *; }
+    -dontwarn com.google.*
+
+    -keep class io.senseai.kelvinsdk.** { *; }
+    -dontwarn io.senseai.kelvinsdk.**
+    -keep class org.apache.commons.** { *; }
+    -dontwarn org.apache.commons.**
+    -keep class com.google.common.** { *; }
+    -dontwarn com.google.common.**
+    -dontwarn javax.annotation.**
+    -keep class com.koushikdutta.ion.** { *; }
+    -dontwarn com.koushikdutta.ion.**
+    -keep class com.github.zafarkhaja.** { *; }
+    -dontwarn com.github.zafarkhaja.**
+    -keep public interface io.senseai.onlinesdk.KelvinInit.ControlCallbacks {*;}
+    -keep public interface io.senseai.onlinesdk.KelvinInit.ConnectionCallbacks {*;}
+
+    {% endhighlight %}
+
+</li>
+</ul>
+
 <div id="sdkPublicApi" class="publicApi">
     <h2 class="page-header">Public API</h2>
   <a class="headerlink" href="#sdkPublicApi"></a>
