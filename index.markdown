@@ -598,8 +598,16 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
   <ul>
      <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
+</ol>
 
-<li>Proguard Configuration</li>
+
+<div id="sdkOtherSetupNotes" class="group">
+    <h2 class="page-header">Other Setup Notes</h2>
+  <a class="headerlink" href="#sdkOtherSetupNotes"></a>
+</div>
+
+#### Proguard Setup
+
 <ul>
 <li>If you are using ProGuard or DexGuard to shrink, optimize and obfuscate your source code, 
 you will need to include the following definitions either in your existing proguard file or in a new
@@ -632,8 +640,82 @@ proguard file that will need to be specified to be used during your build:
 
 </li>
 </ul>
-</ol>
 
+#### Google Play Services
+<ul>
+  <li>
+  This SDK uses Google Play Services version 7.0.0 Fused Location Api. Before you instantiate the SDK it is important to verify that the version of Google Play Services on the device is at least at 7.0.0. If you don’t do this the location will not be tagged to the predictions returned by the SDK. This <a href="http://www.androiddesignpatterns.com/2013/01/google-play-services-setup.html">link</a> provides a detailed tutorial on how to accomplish this.
+  </li>
+</ul>
+
+#### Json Structure of Prediction object
+
+<ul>
+<li>
+  The Prediction object that is returned to the client app has a toJson() method which makes serializing the 
+  object into a json formatted string easy.
+</li>
+  <li>
+    For Basic level accounts, the Prediction object has the following example structure:
+    {% highlight json %}
+{
+    "time": 1445891343445,
+    "location": {
+        "latitude": 44.9783833,
+        "longitude": -93.3083898,
+        "accuracy": 37.5
+    },
+    "derived_sensors": {
+        "temperature": {
+            "value": 15.123828124999942,
+            "confidence": 0.2099999999791275
+        }
+    }
+}
+    {% endhighlight %}
+
+
+  </li>
+  <li>
+    For Premium level accounts, the Predictions object has the following example structure:
+      {% highlight json %}
+{
+    "time": 1445891343445,
+    "location": {
+        "latitude": 44.9783833,
+        "longitude": -93.3083898,
+        "accuracy": 37.5
+    },
+    "derived_sensors": {
+        "temperature": {
+            "value": 15.123828124999942,
+            "confidence": 0.2099999999791275
+        },
+        "is_inside": {
+            "value": true
+        }
+    },
+    "normalized_sensors": {
+        "pressure": {
+            "value": 988.583984375
+        },
+        "lux": {
+            "value": 9.09313146375
+        }
+    },
+    "raw_sensors": {
+        "average_sman_light": {
+            "value": 9.09313146375
+        },
+        "average_sman_humidity": {
+            "value": 43.2221
+        }
+    }
+}
+      {% endhighlight %}
+
+  </li>
+</ul>
 
 <div id="sdkPublicApi" class="publicApi">
     <h2 class="page-header">Public API</h2>

@@ -653,8 +653,15 @@
   <ul>
      <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
+</ol>
 
-<li>Proguard Configuration</li>
+<div id="sdkOtherSetupNotes" class="group">
+    <h2 class="page-header">Other Setup Notes</h2>
+  <a class="headerlink" href="#sdkOtherSetupNotes"></a>
+</div>
+
+<h4 id="proguard-setup">Proguard Setup</h4>
+
 <ul>
 <li>If you are using ProGuard or DexGuard to shrink, optimize and obfuscate your source code, 
 you will need to include the following definitions either in your existing proguard file or in a new
@@ -687,7 +694,84 @@ proguard file that will need to be specified to be used during your build:
 
 </li>
 </ul>
-</ol>
+
+<h4 id="google-play-services">Google Play Services</h4>
+<ul>
+  <li>
+  This SDK uses Google Play Services version 7.0.0 Fused Location Api. Before you instantiate the SDK it is important to verify that the version of Google Play Services on the device is at least at 7.0.0. If you don’t do this the location will not be tagged to the predictions returned by the SDK. This <a href="http://www.androiddesignpatterns.com/2013/01/google-play-services-setup.html">link</a> provides a detailed tutorial on how to accomplish this.
+  </li>
+</ul>
+
+<h4 id="json-structure-of-prediction-object">Json Structure of Prediction object</h4>
+
+<ul>
+<li>
+  The Prediction object that is returned to the client app has a toJson() method which makes serializing the 
+  object into a json formatted string easy.
+</li>
+  <li>
+    For Basic level accounts, the Prediction object has the following example structure:
+    
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1445891343445</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">44.9783833</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-93.3083898</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mf">37.5</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"derived_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"temperature"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.123828124999942</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2099999999791275</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+    </span></code></pre></figure>
+
+
+
+  </li>
+  <li>
+    For Premium level accounts, the Predictions object has the following example structure:
+      
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1445891343445</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">44.9783833</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-93.3083898</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mf">37.5</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"derived_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"temperature"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.123828124999942</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2099999999791275</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"is_inside"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"normalized_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"pressure"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">988.583984375</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"lux"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.09313146375</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"raw_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"average_sman_light"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.09313146375</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"average_sman_humidity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">43.2221</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+      </span></code></pre></figure>
+
+
+  </li>
+</ul>
 
 <div id="sdkPublicApi" class="publicApi">
     <h2 class="page-header">Public API</h2>
