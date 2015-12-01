@@ -723,3 +723,41 @@ proguard file that will need to be specified to be used during your build:
 </div>
 
 <a class="" href="/Archive/index.html">SDK Documentation</a>
+
+<div id="sdkReleaseNotes" class="publicApi">
+    <h2 class="page-header">Release Notes</h2>
+  <a class="headerlink" href="#sdkReleaseNotes"></a>
+</div>
+
+#### V0.6.0
+  * Added Prediction Object to return results to parent app
+  * Added toJson() method to Prediction object to serialize it for parent app
+  * Changed db schema and how predictions vs. diagnostic data vs. sensor data is stored
+  * Added network call for local weather data when in TIMER mode
+  * Added OFF mode to public API
+  * Added db table to store when device was last plugged in and what the battery level was to help with charging model
+  * Added new device parameters to Session response to account for new models
+  * Added new temperature model
+  * Disabled onSurface data collection and prediction
+  * Added isIndoor model
+  * Temperature accuracy changed to temperature confidence
+  * Added different temperature confidence algorithm
+  * Calculating and obfuscating device UUID differently
+  * Added normalized data calculations
+  * Added 'Account' field to Session response to differentiate basic vs premium accounts
+  * Fixed bug when location is turned off on the device
+  * Bug fixes
+
+#### V0.5.x
+  * Changed public API to use a dedicated thread to perform getter and setter operations
+  * Started doing data collection on separate threads
+  * Added a connect() method so that parent app can get a reference without forcing a connection
+  * Added isConnected(), isConnecting() and isCompatible() methods to public API
+  * Split callbacks up into ConnectionCallbacks and ControlCallbacks so user isn't forced to register for control callbacks during connection
+  * Added handler that performs callbacks from KelvinInit on whatever thread getInstance was called from
+  * Removed getPredictionNow() method
+  * Added a class that checks for file validity when a new Session is downloaded
+  * Added new temperature model with support for charging, screen brightness and cpu
+  * Added support for One Plus One nightly build sys fs files changing
+  * Added onSurface model
+

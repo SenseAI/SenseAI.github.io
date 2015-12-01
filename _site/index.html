@@ -780,6 +780,48 @@ proguard file that will need to be specified to be used during your build:
 
 <p><a class="" href="/Archive/index.html">SDK Documentation</a></p>
 
+<div id="sdkReleaseNotes" class="publicApi">
+    <h2 class="page-header">Release Notes</h2>
+  <a class="headerlink" href="#sdkReleaseNotes"></a>
+</div>
+
+<h4 id="v060">V0.6.0</h4>
+<ul>
+  <li>Added Prediction Object to return results to parent app</li>
+  <li>Added toJson() method to Prediction object to serialize it for parent app</li>
+  <li>Changed db schema and how predictions vs. diagnostic data vs. sensor data is stored</li>
+  <li>Added network call for local weather data when in TIMER mode</li>
+  <li>Added OFF mode to public API</li>
+  <li>Added db table to store when device was last plugged in and what the battery level was to help with charging model</li>
+  <li>Added new device parameters to Session response to account for new models</li>
+  <li>Added new temperature model</li>
+  <li>Disabled onSurface data collection and prediction</li>
+  <li>Added isIndoor model</li>
+  <li>Temperature accuracy changed to temperature confidence</li>
+  <li>Added different temperature confidence algorithm</li>
+  <li>Calculating and obfuscating device UUID differently</li>
+  <li>Added normalized data calculations</li>
+  <li>Added ‘Account’ field to Session response to differentiate basic vs premium accounts</li>
+  <li>Fixed bug when location is turned off on the device</li>
+  <li>Bug fixes</li>
+</ul>
+
+<h4 id="v05x">V0.5.x</h4>
+<ul>
+  <li>Changed public API to use a dedicated thread to perform getter and setter operations</li>
+  <li>Started doing data collection on separate threads</li>
+  <li>Added a connect() method so that parent app can get a reference without forcing a connection</li>
+  <li>Added isConnected(), isConnecting() and isCompatible() methods to public API</li>
+  <li>Split callbacks up into ConnectionCallbacks and ControlCallbacks so user isn’t forced to register for control callbacks during connection</li>
+  <li>Added handler that performs callbacks from KelvinInit on whatever thread getInstance was called from</li>
+  <li>Removed getPredictionNow() method</li>
+  <li>Added a class that checks for file validity when a new Session is downloaded</li>
+  <li>Added new temperature model with support for charging, screen brightness and cpu</li>
+  <li>Added support for One Plus One nightly build sys fs files changing</li>
+  <li>Added onSurface model</li>
+</ul>
+
+
         </section>
 
         <aside id="sideNav">
