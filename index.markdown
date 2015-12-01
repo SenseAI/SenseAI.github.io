@@ -480,7 +480,7 @@ example request body
 
 #### Introduction
 
-This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support. 
+This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support.
 
 #### What does the SDK do?
 
@@ -503,7 +503,7 @@ Measurement results are communicated from the SDK to the parent app via a Local 
 
 #### Connect to the SDK
 
-The developer accesses the SDK through a class called KelvinInit. The KelvinInit class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal. 
+The developer accesses the SDK through a class called KelvinInit. The KelvinInit class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal.
 
 To begin using the SDK the getInstance() method must be called. This method returns immediately with a reference to KelvinInit.
 
@@ -519,13 +519,12 @@ The SDK contains a public abstract class that extends WakefulBroadcastReceiver t
 
 Note that it is not necessary to initialize the Sense Ai SDK in a service. It creates a Service internally to ensure that it can outlive the class that instantiates it so the predictions can be made whether the app is in the foreground, background or has been killed. The Service is still susceptible to the OS killing it because of memory pressure, however it will automatically start again once the OS allows it.
 
-The SDK doesn’t cache predictions, it simply returns them to the parent app and the parent app can use them however it needs to.  
+The SDK doesn’t cache predictions, it simply returns them to the parent app and the parent app can use them however it needs to.
 
 <div id="sdkGetStarted" class="group">
     <h2 class="page-header">Get Started</h2>
   <a class="headerlink" href="#sdkGetStarted"></a>
 </div>
-
 1. Register for API key and Developer id
    1. Create an account <a href="https://senseai.io/home/products_and_services">here:</a>
    2. Log In to get your developer id.
@@ -561,12 +560,12 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
       compile 'com.koushikdutta.ion:ion:2.1.3'
       compile 'com.google.android.gms:play-services-base:7.0.0'
       compile 'com.google.android.gms:play-services-location:7.0.0'
-    } 
+    }
     {% endhighlight %}
 4. Manifest setup
    1. Add the following lines (in bold) to your AndroidManifest.xml file:
     {% highlight xml %}
-    <manifest 
+    <manifest
       xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.example.app" >
 
