@@ -45,20 +45,20 @@
   <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Example
 </h4>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">'{}/device/compat'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">)</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s">'onlyTempV2'</span> <span class="p">:</span> <span class="s">'yes'</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;{}/device/compat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_url</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;onlyTempV2&#39;</span> <span class="p">:</span> <span class="s">&#39;yes&#39;</span> <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span><span class="p">:</span>
-	<span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'an error occurred'</span><span class="p">)</span>
+	<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;an error occurred&#39;</span><span class="p">)</span>
 
-<span class="n">devices</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'message'</span><span class="p">][</span><span class="s">'devices'</span><span class="p">]</span>
+<span class="n">devices</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;message&#39;</span><span class="p">][</span><span class="s">&#39;devices&#39;</span><span class="p">]</span>
 
-<span class="k">print</span> <span class="s">'Supported Devices'</span>
+<span class="k">print</span> <span class="s">&#39;Supported Devices&#39;</span>
 
 <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
-	<span class="k">print</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">'osVersion'</span><span class="p">]</span></code></pre></figure>
+	<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="n">device</span><span class="p">[</span><span class="s">&#39;osVersion&#39;</span><span class="p">]</span></code></pre></div>
 
 
         </section>

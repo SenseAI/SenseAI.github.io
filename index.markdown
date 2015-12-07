@@ -661,11 +661,11 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
 #### Proguard Setup
 
 <ul>
-<li>If you are using ProGuard or DexGuard to shrink, optimize and obfuscate your source code, 
+<li>If you are using ProGuard or DexGuard to shrink, optimize and obfuscate your source code,
 you will need to include the following definitions either in your existing proguard file or in a new
 proguard file that will need to be specified to be used during your build:
 
-    {% highlight txt %}
+    {% highlight python %}
 
     -keepattributes Signature
     -keepattributes *Annotation*
@@ -704,7 +704,7 @@ proguard file that will need to be specified to be used during your build:
 
 <ul>
 <li>
-  The Prediction object that is returned to the client app has a toJson() method which makes serializing the 
+  The Prediction object that is returned to the client app has a toJson() method which makes serializing the
   object into a json formatted string easy.
 </li>
   <li>
