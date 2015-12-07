@@ -31,7 +31,7 @@ Where timestamps are required either an ISO-8601 date string or a milliseconds-s
   <a class="headerlink" href="#apiDocsAndCode"></a>
 </div>
 
-Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:
+Throughout the API documentation we use the Python language to illustrate example usage.  For the examples to work the following imports are necessary:
 
 {% highlight python %}
 import requests
@@ -39,16 +39,16 @@ import time
 import datetime
 {% endhighlight %}
 
-We use [requests](http://docs.python-requests.org/en/latest/) for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.
+We use [requests](http://docs.python-requests.org/en/latest/) for the http library in these examples, but the features used are expected to be present in most mature http libraries in popular languages.
 
 <div id="apiResource" class="group">
   <h3>Resource Descriptors</h3>
   <a class="headerlink" href="#apiResource"></a>
 </div>
 
-It is useful to too look at how SenseAI's backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:
+It is useful to look at how SenseAI's backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:
 
-**users** *have* **applications** : a user who is a developer can create applications(which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id
+**users** *have* **applications** : a user who is a developer can create applications (which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id
 
 **application** *have* **environments** : for each application, each device which uses an instance of the SDK is referred to as an environment, this environment tracks and identifies the mobile devices
 
@@ -73,7 +73,7 @@ These relationships create the following possible resource descriptors:
   <a class="headerlink" href="#apiResponse"></a>
 </div>
 
-All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for `GET /user/_` is seen below.
+All response bodies are JSON encoded.  All JSON responses have a standard response envelope which can be used to obtain meta-data about the response in addition to the message payload.  An example for `GET /user/_` is seen below.
 
 #### Example Response
 
@@ -120,7 +120,7 @@ All response bodies are JSON encoded.  All JSON responses have a standard respon
   <a class="headerlink" href="#apiPagination"></a>
 </div>
 
-For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: `limit` determines the number of items returned at a time, `offset` is the id of the last item obtained by the caller.  If the `links.next` field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.
+For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: `limit` determines the number of items returned at a time, `offset` is the id of the last item obtained by the caller.  If the `links.next` field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when `links.next` is undefined.  See List Environment Example below for a code example.
 
 <div id="apiRoutes" class="group">
   <h2 class="page-header">API Routes</h2>
@@ -480,24 +480,18 @@ example request body
 
 #### Introduction
 
-This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support.
+This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Please contact [help@senseai.io](mailto:help@senseai.io) for additional support.
 
-#### What does the SDK do?
-
-The purpose of the SDK is to normalize and extend the sensing capabilities of Android devices without any additional hardware.  This enables the measurement of comparable physical and context variables in the neighborhood of the device.  A complete list of the measurements can be found in section 11 of this document.
+The purpose of the Sense Ai SDK is to normalize and extend the sensing capabilities of Android devices, enabling the measurement of comparable physical and context variables in the neighborhood of any supported device.  A complete list of the measurements can be found below.  Please note that the SDK is compatible with Android SDK versions 15 and up.
 
 #### Basics of Operation
 
-The SDK is compatible with Android SDK versions 15 and up.
+At the core of the SDK is a Service that curates measurements derived from sensors and other data sources, and tags them with the time and last known location. The Service can be configured so that it is constantly running (even if the parent app has been killed) either at a fast rate or at a slow rate.  Alternatively, it can be configured on a timer to sleep, wake up at a set frequency to make a measurement, and then go back to sleep.  The timer period is 15 minutes by default but can be configured remotely from the developer portal.  Measurements and predictions are not instantaneou and require at least 40 seconds of on-time.
 
-At the core of the SDK is a Service that curates measurements derived from sensors and other data sources, and tags them with the time and last known location. The Service can be configured so that it is constantly running (even if the parent app has been killed) either at a fast rate or at a slow rate or it can be configured on a timer to sleep and wake up every few minutes to make a temperature prediction and then go back to sleep until it is awoken by the timer again. The period of the timer is defaulted to 15 minutes however the developer can configure this time remotely from the developer portal to range between 3 and 15 minutes per prediction.
-
-Predictions are not made instantaneously and require at least 40 seconds of on-time before a prediction can be made.
-
-Measurement results are communicated from the SDK to the parent app via a Local Broadcast. To receive updates from the SDK the developer will need to extend and register the KelvinWakefulBroadcastReceiver from the SDK. This will allow the parent app to receive updates while in the foreground, background or after being killed.
+Results are communicated from the SDK to the parent app via a Local Broadcast. To receive updates from the SDK the developer will need to extend and register the KelvinWakefulBroadcastReceiver from the SDK. This will allow the parent app to receive updates while in the foreground, background or after being killed.
 
 <div id="sdkBasicImplementation" class="group">
-    <h2 class="page-header">Implementation Basics</h2>
+    <h2 class="page-header">Implementation Overview</h2>
   <a class="headerlink" href="#sdkBasicImplementation"></a>
 </div>
 
@@ -596,7 +590,7 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
    </ul>
 <li>Setup complete</li>
   <ul>
-     <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
+     <li>Your project is now setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
 </ol>
 
@@ -717,14 +711,14 @@ proguard file that will need to be specified to be used during your build:
   </li>
 </ul>
 
-<div id="sdkPublicApi" class="publicApi">
+<div id="sdkPublicApi" class="group">
     <h2 class="page-header">Public API</h2>
   <a class="headerlink" href="#sdkPublicApi"></a>
 </div>
 
 <a class="" href="/Archive/index.html">SDK Documentation</a>
 
-<div id="sdkReleaseNotes" class="publicApi">
+<div id="sdkReleaseNotes" class="group">
     <h2 class="page-header">Release Notes</h2>
   <a class="headerlink" href="#sdkReleaseNotes"></a>
 </div>
