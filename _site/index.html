@@ -62,22 +62,22 @@
   <a class="headerlink" href="#apiDocsAndCode"></a>
 </div>
 
-<p>Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
+<p>Throughout the API documentation we use the Python language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">datetime</span></code></pre></figure>
 
-<p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.</p>
+<p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, but the features used are expected to be present in most mature http libraries in popular languages.</p>
 
 <div id="apiResource" class="group">
   <h3>Resource Descriptors</h3>
   <a class="headerlink" href="#apiResource"></a>
 </div>
 
-<p>It is useful to too look at how SenseAI’s backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:</p>
+<p>It is useful to look at how SenseAI’s backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:</p>
 
-<p><strong>users</strong> <em>have</em> <strong>applications</strong> : a user who is a developer can create applications(which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id</p>
+<p><strong>users</strong> <em>have</em> <strong>applications</strong> : a user who is a developer can create applications (which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id</p>
 
 <p><strong>application</strong> <em>have</em> <strong>environments</strong> : for each application, each device which uses an instance of the SDK is referred to as an environment, this environment tracks and identifies the mobile devices</p>
 
@@ -102,7 +102,7 @@
   <a class="headerlink" href="#apiResponse"></a>
 </div>
 
-<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for <code class="highlighter-rouge">GET /user/_</code> is seen below.</p>
+<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope which can be used to obtain meta-data about the response in addition to the message payload.  An example for <code class="highlighter-rouge">GET /user/_</code> is seen below.</p>
 
 <h4 id="example-response">Example Response</h4>
 
@@ -171,7 +171,7 @@
   <a class="headerlink" href="#apiPagination"></a>
 </div>
 
-<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code class="highlighter-rouge">limit</code> determines the number of items returned at a time, <code class="highlighter-rouge">offset</code> is the id of the last item obtained by the caller.  If the <code class="highlighter-rouge">links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.</p>
+<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code class="highlighter-rouge">limit</code> determines the number of items returned at a time, <code class="highlighter-rouge">offset</code> is the id of the last item obtained by the caller.  If the <code class="highlighter-rouge">links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when <code class="highlighter-rouge">links.next</code> is undefined.  See List Environment Example below for a code example.</p>
 
 <div id="apiRoutes" class="group">
   <h2 class="page-header">API Routes</h2>
@@ -535,42 +535,36 @@
 
 <h4 id="introduction">Introduction</h4>
 
-<p>This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Contact help@senseai.io for additional support.</p>
+<p>This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Please contact <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#101;&#108;&#112;&#064;&#115;&#101;&#110;&#115;&#101;&#097;&#105;&#046;&#105;&#111;">&#104;&#101;&#108;&#112;&#064;&#115;&#101;&#110;&#115;&#101;&#097;&#105;&#046;&#105;&#111;</a> for additional support.</p>
 
-<h4 id="what-does-the-sdk-do">What does the SDK do?</h4>
-
-<p>The purpose of the SDK is to normalize and extend the sensing capabilities of Android devices without any additional hardware.  This enables the measurement of comparable physical and context variables in the neighborhood of the device.  A complete list of the measurements can be found in section 11 of this document.</p>
+<p>The purpose of the Sense Ai SDK is to normalize and extend the sensing capabilities of Android devices, enabling the measurement of comparable physical and context variables in the neighborhood of any supported device.  A complete list of the measurements can be found below.  Please note that the SDK is compatible with Android SDK versions 15 and up.</p>
 
 <h4 id="basics-of-operation">Basics of Operation</h4>
 
-<p>The SDK is compatible with Android SDK versions 15 and up.</p>
+<p>At the core of the SDK is a Service that curates measurements derived from sensors and other data sources, and tags them with the time and last known location. The Service can be configured so that it is constantly running (even if the parent app has been killed) either at a fast rate or at a slow rate.  Alternatively, it can be configured on a timer to sleep, wake up at a set frequency to make a measurement, and then go back to sleep.  The timer period is 15 minutes by default but can be configured remotely from the developer portal.  Measurements and predictions are not instantaneou and require at least 40 seconds of on-time.</p>
 
-<p>At the core of the SDK is a Service that curates measurements derived from sensors and other data sources, and tags them with the time and last known location. The Service can be configured so that it is constantly running (even if the parent app has been killed) either at a fast rate or at a slow rate or it can be configured on a timer to sleep and wake up every few minutes to make a temperature prediction and then go back to sleep until it is awoken by the timer again. The period of the timer is defaulted to 15 minutes however the developer can configure this time remotely from the developer portal to range between 3 and 15 minutes per prediction.</p>
-
-<p>Predictions are not made instantaneously and require at least 40 seconds of on-time before a prediction can be made.</p>
-
-<p>Measurement results are communicated from the SDK to the parent app via a Local Broadcast. To receive updates from the SDK the developer will need to extend and register the KelvinWakefulBroadcastReceiver from the SDK. This will allow the parent app to receive updates while in the foreground, background or after being killed.</p>
+<p>Results are communicated from the SDK to the parent app via a Local Broadcast. To receive updates from the SDK the developer will need to extend and register the KelvinWakefulBroadcastReceiver from the SDK. This will allow the parent app to receive updates while in the foreground, background or after being killed.</p>
 
 <div id="sdkBasicImplementation" class="group">
-    <h2 class="page-header">Implementation Basics</h2>
+    <h2 class="page-header">Implementation Overview</h2>
   <a class="headerlink" href="#sdkBasicImplementation"></a>
 </div>
 
 <h4 id="connect-to-the-sdk">Connect to the SDK</h4>
 
-<p>The developer accesses the SDK through a class called KelvinInit. The KelvinInit class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal.</p>
+<p>The developer accesses the SDK through a class called KelvinInit. The <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html"><code class="highlighter-rouge">KelvinInit</code></a> class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal.</p>
 
-<p>To begin using the SDK the getInstance() method must be called. This method returns immediately with a reference to KelvinInit.</p>
+<p>To begin using the SDK the <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#getInstance(android.content.Context)">getInstance()</a> method must be called. This method returns immediately with a reference to <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html"><code class="highlighter-rouge">KelvinInit</code></a>.</p>
 
-<p>Before the SDK can be used it must be connected to. To do this the connect() method must be called. The connect() method is asynchronous because the SDK needs to authenticate the application and ensure device compatibility. The connect() method requires an api key and developer id which can be obtained from our developer web portal. The ConnectionCallback is used to let the application know when the SDK is connected, is compatible or if the connection failed. Once the connection callback indicates that the SDK is connected and compatible then the rest of the SDK methods are able to be called. If any of the other methods are called prior to the SDK being connected, then a RuntimeException will be thrown.</p>
+<p>Before the SDK can be used it must be connected to. To do this the <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect()</a> method must be called. <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect()</a> is asynchronous because the SDK needs to authenticate the application and ensure device compatibility. The <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect()</a> method requires an api key and developer id which can be obtained from our developer web portal. The <a href="Archive/io/senseai/kelvinsdk/KelvinInit.ConnectionCallbacks.html"><code class="highlighter-rouge">ConnectionCallback</code></a> is used to let the application know when the SDK is connected, is compatible or if the connection failed. Once the connection callback indicates that the SDK is connected and compatible then the rest of the SDK methods are able to be called. If any of the other methods are called prior to the SDK being connected, then a RuntimeException will be thrown.</p>
 
 <h4 id="adjust-sdk-settings">Adjust SDK Settings</h4>
 
-<p>If the developer desires to change the rate of data collection the setDataMode() method can be called and supplied with one of four modes: OperatingMode.ALWAYS_FAST, OperatingMode.ALWAYS_SLOW, OperatingMode.TIMER and OperatingMode.OFF. The ALWAYS_SLOW and ALWAYS_FAST modes put the SDK in a mode where data is constantly collected to make predictions. Predictions will occur either every 40 seconds or every 10 seconds respectively. To set the SDK to TIMER mode the TIMER argument is supplied and the SDK will revert back to sleeping for period of time then waking up and making a prediction. If starting out in TIMER mode it will take 60 seconds before a prediction is returned. The period of the timer is set through the developer portal. OperatingMode.OFF will stop the data collection from occurring. Data collection will not occur again until the mode is set to something other than OperatingMode.OFF.</p>
+<p>If the developer desires to change the rate of data collection the <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#setDataMode(io.senseai.kelvinsdk.OperatingMode)">setDataMode()</a> method can be called and supplied with one of four modes: OperatingMode.ALWAYS_FAST, OperatingMode.ALWAYS_SLOW, OperatingMode.TIMER and OperatingMode.OFF. The ALWAYS_SLOW and ALWAYS_FAST modes put the SDK in a mode where data is constantly collected to make predictions. Predictions will occur either every 40 seconds or every 10 seconds respectively. To set the SDK to TIMER mode the TIMER argument is supplied and the SDK will revert back to sleeping for period of time then waking up and making a prediction. If starting out in TIMER mode it will take 60 seconds before a prediction is returned. The period of the timer is set through the developer portal. OperatingMode.OFF will stop the data collection from occurring. Data collection will not occur again until the mode is set to something other than OperatingMode.OFF.</p>
 
 <h4 id="receive-data-from-the-sdk">Receive data from the SDK</h4>
 
-<p>The SDK contains a public abstract class that extends WakefulBroadcastReceiver that can be extended by the developer and used to receive updates from the Sense Ai SDK. The developer needs to create and register instances of this BroadcastReceiver wherever updates are required. For instance, in an app that wants to log temperature and location data, the developer might create an instance of the WakefulBroadcastReceiver in their Application class and register it in onCreate() of the Application class. Because it’s a wakeful broadcast receiver, whenever a broadcast is received the receiver can fire off an IntentService to do work such as persisting the values to a database. This ensures that data can be collected and persisted even if the parent app has been killed or is in the background. In other instances, it may only be important to collect data in an Activity or Fragment and so the broadcast receiver can just be registered/unregistered in onStart() and onPause().</p>
+<p>The SDK contains a public abstract class, <a href="Archive/io/senseai/kelvinsdk/KelvinWakefulBroadcastReceiver.html"><code class="highlighter-rouge">KelvinWakefulBroadcastReceiver</code></a> that extends <code class="highlighter-rouge">WakefulBroadcastReceiver</code> and is used to receive updates from the Sense Ai SDK.  The developer needs to create and register instances of this <a href="Archive/io/senseai/kelvinsdk/KelvinWakefulBroadcastReceiver.html"><code class="highlighter-rouge">KelvinWakefulBroadcastReceiver</code></a> wherever updates are required. For instance, in an app that wants to log temperature and location data, the developer might create an instance of the <a href="Archive/io/senseai/kelvinsdk/KelvinWakefulBroadcastReceiver.html"><code class="highlighter-rouge">WakefulBroadcastReceiver</code></a> in their Application class and register it in onCreate() of the Application class.  Whenever a broadcast is received the receiver can fire off an IntentService to do work such as persisting the values to a database. This ensures that data can be collected and persisted even if the parent app has been killed or is in the background. In other instances, it may only be important to collect data in an Activity or Fragment and so the broadcast receiver can just be registered/unregistered in onStart() and onPause().</p>
 
 <p>Note that it is not necessary to initialize the Sense Ai SDK in a service. It creates a Service internally to ensure that it can outlive the class that instantiates it so the predictions can be made whether the app is in the foreground, background or has been killed. The Service is still susceptible to the OS killing it because of memory pressure, however it will automatically start again once the OS allows it.</p>
 
@@ -651,7 +645,7 @@
    </ul>
 <li>Setup complete</li>
   <ul>
-     <li>Your project is not setup to run the SDK and resolve the SDK's dependencies</li>
+     <li>Your project is now setup to run the SDK and resolve the SDK's dependencies</li>
    </ul>
 </ol>
 
@@ -773,14 +767,14 @@ proguard file that will need to be specified to be used during your build:
   </li>
 </ul>
 
-<div id="sdkPublicApi" class="publicApi">
+<div id="sdkPublicApi" class="group">
     <h2 class="page-header">Public API</h2>
   <a class="headerlink" href="#sdkPublicApi"></a>
 </div>
 
 <p><a class="" href="/Archive/index.html">SDK Documentation</a></p>
 
-<div id="sdkReleaseNotes" class="publicApi">
+<div id="sdkReleaseNotes" class="group">
     <h2 class="page-header">Release Notes</h2>
   <a class="headerlink" href="#sdkReleaseNotes"></a>
 </div>
@@ -829,34 +823,39 @@ proguard file that will need to be specified to be used during your build:
                 <ul id="sidebar" class="nav nav-stacked">
                     <li>
                         <a href="#apiDocumentation">API Documentation</a>
-                    </li>
-                    <li>
-                        <a href="#apiGeneral">General</a>
-                        <ul class="nav nav-stacked">
-                            <li><a href="#apiConventions">Conventions</a></li>
-                            <li><a href="#apiDocsAndCode">Documentation Code Examples</a></li>
-                            <li><a href="#apiResource">Resource Descriptors</a></li>
-                            <li><a href="#apiResponse">Response Envelope</a></li>
-                            <li><a href="#apiPagination">Pagination</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#apiRoutes">API Routes</a>
-                        <ul class="nav nav-stacked">
-                            <li><a href="#apiCompatibility">List Device Compatibility</a></li>
-                            <li><a href="#apiEnvironments">List Environments for an Application</a></li>
-                            <li><a href="#apiQueryData">Query Data from an Environment in an Application</a></li>
-                            <li><a href="#apiApplicationInfo">Get Application Info</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#sdkDocumentation">SDK</a>
-                        <ul class="nav nav-stacked">
-                            <li><a href="#sdkGeneral">About the SDK</a></li>
-                            <li><a href="#sdkBasicImplementation">Implementation Basics</a></li>
-                            <li><a href="#sdkGetStarted">Get Started</a></li>
-                        </ul>
-                    </li>
+
+			<ul class="nav nav-stacked">
+			    <li>
+				<a href="#apiGeneral">General</a>
+				<ul class="nav nav-stacked">
+				    <li><a href="#apiConventions">- Conventions</a></li>
+				    <li><a href="#apiDocsAndCode">- Documentation Code Examples</a></li>
+				    <li><a href="#apiResource">- Resource Descriptors</a></li>
+				    <li><a href="#apiResponse">- Response Envelope</a></li>
+				    <li><a href="#apiPagination">- Pagination</a></li>
+				</ul>
+			    </li>
+			    <li>
+				<a href="#apiRoutes">API Routes</a>
+				<ul class="nav nav-stacked">
+				    <li><a href="#apiCompatibility">- List Device Compatibility</a></li>
+				    <li><a href="#apiEnvironments">- List Environments for an Application</a></li>
+				    <li><a href="#apiQueryData">- Query Data from an Environment in an Application</a></li>
+				    <li><a href="#apiApplicationInfo">- Get Application Info</a></li>
+				</ul>
+			    </li>
+			</ul>
+		    <li>
+    		        <a href="#sdkDocumentation">SDK Documentation</a>
+			<ul class="nav nav-stacked">
+			    <li><a href="#sdkGeneral">About the SDK</a></li>
+			    <li><a href="#sdkBasicImplementation">Overview</a></li>
+			    <li><a href="#sdkGetStarted">Getting Started</a></li>
+			    <li><a href="#sdkPublicApi">Public API Reference</a></li>
+			    <li><a href="#sdkReleaseNotes">SDK Release Notes</a></li>
+
+			</ul>
+		    </li>
                 </ul>
             </nav>
         </aside>
