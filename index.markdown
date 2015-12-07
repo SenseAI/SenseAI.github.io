@@ -444,7 +444,10 @@ example response message
 }
 {% endhighlight %}
 
-### Change Application-Level Remote Configuration
+<div id="apiRemoteConfig" class="group">
+  <h3>Remote Configuration</h3>
+  <a class="headerlink" href="#apiRemoteConfig"></a>
+</div>
 
 Certain SDK parameters can be adjusted in the field, this should be done using the following:
 
@@ -467,6 +470,61 @@ example request body
 }
 {% endhighlight %}
 
+<div id="apiGeoBound" class="group">
+  <h3>Application Level Geo Bounds</h3>
+  <a class="headerlink" href="#apiGeoBound"></a>
+</div>
+
+Get the bounding box for recent data in an application.
+
+#### URL
+
+```
+GET /api/v2/user/:user_id/application/:application_id/data/geo/bounds
+```
+
+#### Response
+
+{% highlight json %}
+{
+  "min": {
+    "latitude": 37.32581779360771,
+    "longitude": -122.02696233987808
+  },
+  "max": {
+    "latitude": 44.95370104908943,
+    "longitude": -77.26228326559067
+  }
+}
+{% endhighlight %}
+
+<div id="apiGeoQuery" class="group">
+  <h3>Application Level Geo Query</h3>
+  <a class="headerlink" href="#apiGeoQuery"></a>
+</div>
+
+Application Level Geo Bounds Info
+
+Get most recent data for an application for a specified region.  Return is a list of datapoints with environment information populated.
+
+#### URL
+
+```
+GET /api/v2/user/:user_id/application/:application_id/data/geo
+```
+
+#### Options
+
+parameter        |   description
+-----------------|--------------------------------------
+**latitude[0]**        | latitude for first component of bounding box
+**longitude[0]**          | longitude for first component of bounding box
+**latitude[1]**        | latitude for second component of bounding box
+**longitude[1]**        | longitude for second component of bounding box
+
+#### Response
+
+A list of data with environment info populated.
 
 <div id="sdkDocumentation" class="group">
   <h1>SDK Documentation</h1>
@@ -754,4 +812,3 @@ proguard file that will need to be specified to be used during your build:
   * Added new temperature model with support for charging, screen brightness and cpu
   * Added support for One Plus One nightly build sys fs files changing
   * Added onSurface model
-
