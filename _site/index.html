@@ -503,7 +503,10 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
-<h3 id="change-application-level-remote-configuration">Change Application-Level Remote Configuration</h3>
+<div id="apiRemoteConfig" class="group">
+  <h3>Remote Configuration</h3>
+  <a class="headerlink" href="#apiRemoteConfig"></a>
+</div>
 
 <p>Certain SDK parameters can be adjusted in the field, this should be done using the following:</p>
 
@@ -522,6 +525,80 @@
   </span><span class="nt">"collection_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
   </span><span class="nt">"post_diagnostic_data"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
+
+<div id="apiGeoBound" class="group">
+  <h3>Application Level Geo Bounds</h3>
+  <a class="headerlink" href="#apiGeoBound"></a>
+</div>
+
+<p>Get the bounding box for recent data in an application.</p>
+
+<h4 id="url-5">URL</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /api/v2/user/:user_id/application/:application_id/data/geo/bounds
+</code></pre>
+</div>
+
+<h4 id="response-4">Response</h4>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nt">"min"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">37.32581779360771</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-122.02696233987808</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"max"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">44.95370104908943</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-77.26228326559067</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<div id="apiGeoQuery" class="group">
+  <h3>Application Level Geo Query</h3>
+  <a class="headerlink" href="#apiGeoQuery"></a>
+</div>
+
+<p>Application Level Geo Bounds Info</p>
+
+<p>Get most recent data for an application for a specified region.  Return is a list of datapoints with environment information populated.</p>
+
+<h4 id="url-6">URL</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>GET /api/v2/user/:user_id/application/:application_id/data/geo
+</code></pre>
+</div>
+
+<h4 id="options-2">Options</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>latitude[0]</strong></td>
+      <td>latitude for first component of bounding box</td>
+    </tr>
+    <tr>
+      <td><strong>longitude[0]</strong></td>
+      <td>longitude for first component of bounding box</td>
+    </tr>
+    <tr>
+      <td><strong>latitude[1]</strong></td>
+      <td>latitude for second component of bounding box</td>
+    </tr>
+    <tr>
+      <td><strong>longitude[1]</strong></td>
+      <td>longitude for second component of bounding box</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-5">Response</h4>
+
+<p>A list of data with environment info populated.</p>
 
 <div id="sdkDocumentation" class="group">
   <h1>SDK Documentation</h1>
@@ -814,7 +891,6 @@ proguard file that will need to be specified to be used during your build:
   <li>Added support for One Plus One nightly build sys fs files changing</li>
   <li>Added onSurface model</li>
 </ul>
-
 
         </section>
 
