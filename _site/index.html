@@ -62,22 +62,22 @@
   <a class="headerlink" href="#apiDocsAndCode"></a>
 </div>
 
-<p>Throughout the API documentation we use the python(2) language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
+<p>Throughout the API documentation we use the Python language to illustrate example usage.  For the examples to work the following imports are necessary:</p>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">datetime</span></code></pre></div>
 
-<p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, the features used are expected to be present in most mature http libraries in popular languages.</p>
+<p>We use <a href="http://docs.python-requests.org/en/latest/">requests</a> for the http library in these examples, but the features used are expected to be present in most mature http libraries in popular languages.</p>
 
 <div id="apiResource" class="group">
   <h3>Resource Descriptors</h3>
   <a class="headerlink" href="#apiResource"></a>
 </div>
 
-<p>It is useful to too look at how SenseAI’s backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:</p>
+<p>It is useful to look at how SenseAI’s backend resources are organized, in order to understand the possibilites for resource access.  The resource relationships visible to the developer can be summed up as follows:</p>
 
-<p><strong>users</strong> <em>have</em> <strong>applications</strong> : a user who is a developer can create applications(which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id</p>
+<p><strong>users</strong> <em>have</em> <strong>applications</strong> : a user who is a developer can create applications (which represent a mobile device application which embeds an SDK), each of these are identified by an api_key, which are used to initiate the SDK along with the user_id</p>
 
 <p><strong>application</strong> <em>have</em> <strong>environments</strong> : for each application, each device which uses an instance of the SDK is referred to as an environment, this environment tracks and identifies the mobile devices</p>
 
@@ -102,7 +102,7 @@
   <a class="headerlink" href="#apiResponse"></a>
 </div>
 
-<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope, that can be used to obtain meta-data about the response, in addition to the message payload.  An example for <code>GET /user/_</code> is seen below.</p>
+<p>All response bodies are JSON encoded.  All JSON responses have a standard response envelope which can be used to obtain meta-data about the response in addition to the message payload.  An example for <code>GET /user/_</code> is seen below.</p>
 
 <h4 id="example-response">Example Response</h4>
 
@@ -171,7 +171,7 @@
   <a class="headerlink" href="#apiPagination"></a>
 </div>
 
-<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code>limit</code> determines the number of items returned at a time, <code>offset</code> is the id of the last item obtained by the caller.  If the <code>links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when links.next is undefined.  See List Environment Example below for a code example.</p>
+<p>For large collections of resources pagination is necessary.  Two query params control pagination in resources with plurality: <code>limit</code> determines the number of items returned at a time, <code>offset</code> is the id of the last item obtained by the caller.  If the <code>links.next</code> field exists in the response body, that link (constructed using limit and offset) can be followed in order to obtain the next set of items.  Pagination terminates when <code>links.next</code> is undefined.  See List Environment Example below for a code example.</p>
 
 <div id="apiRoutes" class="group">
   <h2 class="page-header">API Routes</h2>
@@ -588,7 +588,293 @@
 
 <h4 id="response-5">Response</h4>
 
-<p>A list of data with environment info populated</p>
+<p>A list of data with environment info populated.</p>
+
+<div id="sdkDocumentation" class="group">
+  <h1>SDK Documentation</h1>
+  <a class="headerlink" href="#sdkDocumentation"></a>
+</div>
+
+<div id="sdkGeneral" class="group">
+  <h2 class="page-header">About the SDK</h2>
+  <a class="headerlink" href="#sdkGeneral"></a>
+</div>
+
+<h4 id="introduction">Introduction</h4>
+
+<p>This document explains what the Sense Ai SDK for Android is and how to integrate it into your application.  Please review these details prior to implementation.  Please contact <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#101;&#108;&#112;&#064;&#115;&#101;&#110;&#115;&#101;&#097;&#105;&#046;&#105;&#111;">&#104;&#101;&#108;&#112;&#064;&#115;&#101;&#110;&#115;&#101;&#097;&#105;&#046;&#105;&#111;</a> for additional support.</p>
+
+<p>The purpose of the Sense Ai SDK is to normalize and extend the sensing capabilities of Android devices, enabling the measurement of comparable physical and context variables in the neighborhood of any supported device.  A complete list of the measurements can be found below.  Please note that the SDK is compatible with Android SDK versions 15 and up.</p>
+
+<h4 id="basics-of-operation">Basics of Operation</h4>
+
+<p>At the core of the SDK is a Service that curates measurements derived from sensors and other data sources, and tags them with the time and last known location. The Service can be configured so that it is constantly running (even if the parent app has been killed) either at a fast rate or at a slow rate.  Alternatively, it can be configured on a timer to sleep, wake up at a set frequency to make a measurement, and then go back to sleep.  The timer period is 15 minutes by default but can be configured remotely from the developer portal.  Measurements and predictions are not instantaneou and require at least 40 seconds of on-time.</p>
+
+<p>Results are communicated from the SDK to the parent app via a Local Broadcast. To receive updates from the SDK the developer will need to extend and register the KelvinWakefulBroadcastReceiver from the SDK. This will allow the parent app to receive updates while in the foreground, background or after being killed.</p>
+
+<div id="sdkBasicImplementation" class="group">
+    <h2 class="page-header">Implementation Overview</h2>
+  <a class="headerlink" href="#sdkBasicImplementation"></a>
+</div>
+
+<h4 id="connect-to-the-sdk">Connect to the SDK</h4>
+
+<p>The developer accesses the SDK through a class called KelvinInit. The <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html"><code>KelvinInit</code></a> class allows the developer to use their api key and developer id to authenticate with the SDK, to set the mode of data collection, to get the current data collection mode and to ask the Sense Ai servers for a PIN which can be used to associate a device with the Sense Ai data portal.</p>
+
+<p>To begin using the SDK the <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#getInstance(android.content.Context)">getInstance()</a> method must be called. This method returns immediately with a reference to <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html"><code>KelvinInit</code></a>.</p>
+
+<p>Before the SDK can be used it must be connected to. To do this the <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect()</a> method must be called. <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect()</a> is asynchronous because the SDK needs to authenticate the application and ensure device compatibility. The <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#connect(java.lang.String,%20java.lang.String,%20io.senseai.kelvinsdk.KelvinInit.ConnectionCallbacks)">connect()</a> method requires an api key and developer id which can be obtained from our developer web portal. The <a href="Archive/io/senseai/kelvinsdk/KelvinInit.ConnectionCallbacks.html"><code>ConnectionCallback</code></a> is used to let the application know when the SDK is connected, is compatible or if the connection failed. Once the connection callback indicates that the SDK is connected and compatible then the rest of the SDK methods are able to be called. If any of the other methods are called prior to the SDK being connected, then a RuntimeException will be thrown.</p>
+
+<h4 id="adjust-sdk-settings">Adjust SDK Settings</h4>
+
+<p>If the developer desires to change the rate of data collection the <a href="Archive/io/senseai/kelvinsdk/KelvinInit.html#setDataMode(io.senseai.kelvinsdk.OperatingMode)">setDataMode()</a> method can be called and supplied with one of four modes: OperatingMode.ALWAYS_FAST, OperatingMode.ALWAYS_SLOW, OperatingMode.TIMER and OperatingMode.OFF. The ALWAYS_SLOW and ALWAYS_FAST modes put the SDK in a mode where data is constantly collected to make predictions. Predictions will occur either every 40 seconds or every 10 seconds respectively. To set the SDK to TIMER mode the TIMER argument is supplied and the SDK will revert back to sleeping for period of time then waking up and making a prediction. If starting out in TIMER mode it will take 60 seconds before a prediction is returned. The period of the timer is set through the developer portal. OperatingMode.OFF will stop the data collection from occurring. Data collection will not occur again until the mode is set to something other than OperatingMode.OFF.</p>
+
+<h4 id="receive-data-from-the-sdk">Receive data from the SDK</h4>
+
+<p>The SDK contains a public abstract class, <a href="Archive/io/senseai/kelvinsdk/KelvinWakefulBroadcastReceiver.html"><code>KelvinWakefulBroadcastReceiver</code></a> that extends <code>WakefulBroadcastReceiver</code> and is used to receive updates from the Sense Ai SDK.  The developer needs to create and register instances of this <a href="Archive/io/senseai/kelvinsdk/KelvinWakefulBroadcastReceiver.html"><code>KelvinWakefulBroadcastReceiver</code></a> wherever updates are required. For instance, in an app that wants to log temperature and location data, the developer might create an instance of the <a href="Archive/io/senseai/kelvinsdk/KelvinWakefulBroadcastReceiver.html"><code>WakefulBroadcastReceiver</code></a> in their Application class and register it in onCreate() of the Application class.  Whenever a broadcast is received the receiver can fire off an IntentService to do work such as persisting the values to a database. This ensures that data can be collected and persisted even if the parent app has been killed or is in the background. In other instances, it may only be important to collect data in an Activity or Fragment and so the broadcast receiver can just be registered/unregistered in onStart() and onPause().</p>
+
+<p>Note that it is not necessary to initialize the Sense Ai SDK in a service. It creates a Service internally to ensure that it can outlive the class that instantiates it so the predictions can be made whether the app is in the foreground, background or has been killed. The Service is still susceptible to the OS killing it because of memory pressure, however it will automatically start again once the OS allows it.</p>
+
+<p>The SDK doesn’t cache predictions, it simply returns them to the parent app and the parent app can use them however it needs to.</p>
+
+<div id="sdkGetStarted" class="group">
+    <h2 class="page-header">Getting Started</h2>
+  <a class="headerlink" href="#sdkGetStarted"></a>
+</div>
+
+<ol>
+<li> Register for API key and Developer id</li>
+ <ul>
+   <li>Create an account <a href="https://senseai.io/home/products_and_services">here:</a></li>
+   <li>Log In to get your developer id.</li>
+   <li>Generate an API key using your app’s package name. Note, if the package name ever changes, you must retrieve a new API key.</li>
+ </ul>
+<li>Add library files to your project</li>
+<ul>
+   <li>Your project structure should include the following directories: Project-Dir/app/<b>libs/</b></li>
+   <li>Add the following file to the <b>/libs</b> directory: <b>kelvinsdk-production-onlinesdk-release-0.7.0.aar</b> </li>
+
+  </ul>
+<li>Setup project in Gradle</li>
+   <ul>
+   <li>Note on Google Play Services: Version 7.0.0 is required.  The SDK requires “base” and “location” packages, but if you are using any other Google Play Services packages such as “analytics” you must also use version 7.0.0 of those packages.</li>
+   <li>Locate your app’s build.gradle file (There will most likely be two build.gradle files. Use the build.gradle in your module’s directory, not the higher-level, project-wide build.gradle file). Merge the following statements into your module’s build.gradle file:
+    
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">android</span> <span class="o">{</span>
+      <span class="n">packagingOptions</span> <span class="o">{</span>
+          <span class="n">exclude</span> <span class="s1">&#39;META-INF/LICENSE.txt&#39;</span>
+      <span class="o">}</span>
+      <span class="n">repositories</span> <span class="o">{</span>
+          <span class="n">flatDir</span> <span class="o">{</span>
+              <span class="n">dirs</span> <span class="s1">&#39;libs&#39;</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">compile</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;libs&#39;</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.android.support:appcompat-v7:21.0.3&#39;</span>
+        <span class="n">compile</span> <span class="o">(</span><span class="nl">name:</span><span class="s1">&#39;kelvinsdk-onlinesdk-release-prod-0-6-0&#39;</span><span class="o">,</span> <span class="nl">ext:</span><span class="s1">&#39;aar&#39;</span><span class="o">)</span>
+        <span class="n">compile</span> <span class="s1">&#39;org.apache.commons:commons-math3:3.3&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.google.code.gson:gson:2.3.1&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.github.zafarkhaja:java-semver:0.9.0&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.koushikdutta.ion:ion:2.1.3&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.google.android.gms:play-services-base:7.0.0&#39;</span>
+        <span class="n">compile</span> <span class="s1">&#39;com.google.android.gms:play-services-location:7.0.0&#39;</span>
+    <span class="o">}</span></code></pre></div>
+
+  </li>
+  </ul>
+
+<li> Manifest setup </li>
+    <ul>
+    <li> Add the following lines (in bold) to your AndroidManifest.xml file:
+
+    
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest</span>
+      <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+      <span class="na">package=</span><span class="s">&quot;com.example.app&quot;</span> <span class="nt">&gt;</span>
+
+      <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.ACCESS_FINE_LOCATION&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span>
+
+      <span class="nt">&lt;application</span> <span class="err">android</span> <span class="na">:name=</span><span class="s">”.Your</span> <span class="err">Application</span> <span class="err">Class</span> <span class="err">Name”</span> <span class="nt">&gt;</span>
+        ...
+      <span class="nt">&lt;/application&gt;</span>
+    <span class="nt">&lt;/manifest&gt;</span></code></pre></div>
+
+
+
+   * <b>Note if you’re not extending the application class you can disregard the android:name=”my.applicationclass.name” line.</b>
+   </li>
+   </ul>
+<li>Setup complete</li>
+  <ul>
+     <li>Your project is now setup to run the SDK and resolve the SDK's dependencies</li>
+   </ul>
+</ol>
+
+<div id="sdkOtherSetupNotes" class="group">
+    <h2 class="page-header">Other Setup Notes</h2>
+  <a class="headerlink" href="#sdkOtherSetupNotes"></a>
+</div>
+
+<h4 id="proguard-setup">Proguard Setup</h4>
+
+<ul>
+<li>If you are using ProGuard or DexGuard to shrink, optimize and obfuscate your source code,
+you will need to include the following definitions either in your existing proguard file or in a new
+proguard file that will need to be specified to be used during your build:
+
+    
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">-</span><span class="n">keepattributes</span> <span class="n">Signature</span>
+    <span class="o">-</span><span class="n">keepattributes</span> <span class="o">*</span><span class="n">Annotation</span><span class="o">*</span>
+
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">sun</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">Unsafe</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">com</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">gson</span><span class="o">.</span><span class="n">stream</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">com</span><span class="o">.</span><span class="n">google</span><span class="o">.*</span>
+
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">io</span><span class="o">.</span><span class="n">senseai</span><span class="o">.</span><span class="n">kelvinsdk</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">io</span><span class="o">.</span><span class="n">senseai</span><span class="o">.</span><span class="n">kelvinsdk</span><span class="o">.**</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">commons</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">commons</span><span class="o">.**</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">com</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">common</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">com</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">common</span><span class="o">.**</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">javax</span><span class="o">.</span><span class="n">annotation</span><span class="o">.**</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">com</span><span class="o">.</span><span class="n">koushikdutta</span><span class="o">.</span><span class="n">ion</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">com</span><span class="o">.</span><span class="n">koushikdutta</span><span class="o">.</span><span class="n">ion</span><span class="o">.**</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">com</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">zafarkhaja</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">-</span><span class="n">dontwarn</span> <span class="n">com</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">zafarkhaja</span><span class="o">.**</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="n">public</span> <span class="n">interface</span> <span class="n">io</span><span class="o">.</span><span class="n">senseai</span><span class="o">.</span><span class="n">onlinesdk</span><span class="o">.</span><span class="n">KelvinInit</span><span class="o">.</span><span class="n">ControlCallbacks</span> <span class="p">{</span><span class="o">*</span><span class="p">;}</span>
+    <span class="o">-</span><span class="n">keep</span> <span class="n">public</span> <span class="n">interface</span> <span class="n">io</span><span class="o">.</span><span class="n">senseai</span><span class="o">.</span><span class="n">onlinesdk</span><span class="o">.</span><span class="n">KelvinInit</span><span class="o">.</span><span class="n">ConnectionCallbacks</span> <span class="p">{</span><span class="o">*</span><span class="p">;}</span></code></pre></div>
+
+
+</li>
+</ul>
+
+<h4 id="google-play-services">Google Play Services</h4>
+<ul>
+  <li>
+  This SDK uses Google Play Services version 7.0.0 Fused Location Api. Before you instantiate the SDK it is important to verify that the version of Google Play Services on the device is at least at 7.0.0. If you don’t do this the location will not be tagged to the predictions returned by the SDK. This <a href="http://www.androiddesignpatterns.com/2013/01/google-play-services-setup.html">link</a> provides a detailed tutorial on how to accomplish this.
+  </li>
+</ul>
+
+<h4 id="json-structure-of-prediction-object">Json Structure of Prediction object</h4>
+
+<ul>
+<li>
+  The Prediction object that is returned to the client app has a toJson() method which makes serializing the
+  object into a json formatted string easy.
+</li>
+  <li>
+    For Basic level accounts, the Prediction object has the following example structure:
+    
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="mi">1445891343445</span><span class="p">,</span>
+    <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">44.9783833</span><span class="p">,</span>
+        <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">-93.3083898</span><span class="p">,</span>
+        <span class="nt">&quot;accuracy&quot;</span><span class="p">:</span> <span class="mf">37.5</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;derived_sensors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;temperature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">15.123828124999942</span><span class="p">,</span>
+            <span class="nt">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.2099999999791275</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+  </li>
+  <li>
+    For Premium level accounts, the Predictions object has the following example structure:
+      
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="mi">1445891343445</span><span class="p">,</span>
+    <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">44.9783833</span><span class="p">,</span>
+        <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">-93.3083898</span><span class="p">,</span>
+        <span class="nt">&quot;accuracy&quot;</span><span class="p">:</span> <span class="mf">37.5</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;derived_sensors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;temperature&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">15.123828124999942</span><span class="p">,</span>
+            <span class="nt">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.2099999999791275</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;is_inside&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;normalized_sensors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;pressure&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">988.583984375</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;lux&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">9.09313146375</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;raw_sensors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;average_sman_light&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">9.09313146375</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;average_sman_humidity&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">43.2221</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+  </li>
+</ul>
+
+<div id="sdkPublicApi" class="group">
+    <h2 class="page-header">Public API</h2>
+  <a class="headerlink" href="#sdkPublicApi"></a>
+</div>
+
+<p><a class="" href="/Archive/index.html">SDK Documentation</a></p>
+
+<div id="sdkReleaseNotes" class="group">
+    <h2 class="page-header">Release Notes</h2>
+  <a class="headerlink" href="#sdkReleaseNotes"></a>
+</div>
+
+<h4 id="v060">V0.6.0</h4>
+<ul>
+  <li>Added Prediction Object to return results to parent app</li>
+  <li>Added toJson() method to Prediction object to serialize it for parent app</li>
+  <li>Changed db schema and how predictions vs. diagnostic data vs. sensor data is stored</li>
+  <li>Added network call for local weather data when in TIMER mode</li>
+  <li>Added OFF mode to public API</li>
+  <li>Added db table to store when device was last plugged in and what the battery level was to help with charging model</li>
+  <li>Added new device parameters to Session response to account for new models</li>
+  <li>Added new temperature model</li>
+  <li>Disabled onSurface data collection and prediction</li>
+  <li>Added isIndoor model</li>
+  <li>Temperature accuracy changed to temperature confidence</li>
+  <li>Added different temperature confidence algorithm</li>
+  <li>Calculating and obfuscating device UUID differently</li>
+  <li>Added normalized data calculations</li>
+  <li>Added ‘Account’ field to Session response to differentiate basic vs premium accounts</li>
+  <li>Fixed bug when location is turned off on the device</li>
+  <li>Bug fixes</li>
+</ul>
+
+<h4 id="v05x">V0.5.x</h4>
+<ul>
+  <li>Changed public API to use a dedicated thread to perform getter and setter operations</li>
+  <li>Started doing data collection on separate threads</li>
+  <li>Added a connect() method so that parent app can get a reference without forcing a connection</li>
+  <li>Added isConnected(), isConnecting() and isCompatible() methods to public API</li>
+  <li>Split callbacks up into ConnectionCallbacks and ControlCallbacks so user isn’t forced to register for control callbacks during connection</li>
+  <li>Added handler that performs callbacks from KelvinInit on whatever thread getInstance was called from</li>
+  <li>Removed getPredictionNow() method</li>
+  <li>Added a class that checks for file validity when a new Session is downloaded</li>
+  <li>Added new temperature model with support for charging, screen brightness and cpu</li>
+  <li>Added support for One Plus One nightly build sys fs files changing</li>
+  <li>Added onSurface model</li>
+</ul>
 
         </section>
 
@@ -597,29 +883,42 @@
                 <ul id="sidebar" class="nav nav-stacked">
                     <li>
                         <a href="#apiDocumentation">API Documentation</a>
-                    </li>
-                    <li>
-                        <a href="#apiGeneral">General</a>
-                        <ul class="nav nav-stacked">
-                            <li><a href="#apiConventions">Conventions</a></li>
-                            <li><a href="#apiDocsAndCode">Documentation Code Examples</a></li>
-                            <li><a href="#apiResource">Resource Descriptors</a></li>
-                            <li><a href="#apiResponse">Response Envelope</a></li>
-                            <li><a href="#apiPagination">Pagination</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#apiRoutes">API Routes</a>
-                        <ul class="nav nav-stacked">
-                            <li><a href="#apiCompatibility">List Device Compatibility</a></li>
-                            <li><a href="#apiEnvironments">List Environments for an Application</a></li>
-                            <li><a href="#apiQueryData">Query Data from an Environment in an Application</a></li>
-                            <li><a href="#apiApplicationInfo">Get Application Info</a></li>
-                            <li><a href="#apiRemoteConfig">Remote Configuration</a></li>
-                            <li><a href="#apiGeoBound">Application Level Geo Bounds</a></li>
-                            <li><a href="#apiGeoQuery">Application Level Geo Query</a></li>
-                        </ul>
-                    </li>
+
+			<ul class="nav nav-stacked">
+			    <li>
+				<a href="#apiGeneral">General</a>
+				<ul class="nav nav-stacked">
+				    <li><a href="#apiConventions">- Conventions</a></li>
+				    <li><a href="#apiDocsAndCode">- Documentation Code Examples</a></li>
+				    <li><a href="#apiResource">- Resource Descriptors</a></li>
+				    <li><a href="#apiResponse">- Response Envelope</a></li>
+				    <li><a href="#apiPagination">- Pagination</a></li>
+				</ul>
+			    </li>
+			    <li>
+				<a href="#apiRoutes">API Routes</a>
+				<ul class="nav nav-stacked">
+				    <li><a href="#apiCompatibility">- Device Compatibility</a></li>
+				    <li><a href="#apiEnvironments">- Environments in an Application</a></li>
+				    <li><a href="#apiQueryData">- Data from an Environment</a></li>
+				    <li><a href="#apiApplicationInfo">- Application Info</a></li>
+				    <li><a href="#apiRemoteConfig">- Remote Configuration</a></li>
+				    <li><a href="#apiGeoBound">- Application-level Geo Queries</a></li>
+				    
+				</ul>
+			    </li>
+			</ul>
+		    <li>
+    		        <a href="#sdkDocumentation">SDK Documentation</a>
+			<ul class="nav nav-stacked">
+			    <li><a href="#sdkGeneral">About the SDK</a></li>
+			    <li><a href="#sdkBasicImplementation">Overview</a></li>
+			    <li><a href="#sdkGetStarted">Getting Started</a></li>
+			    <li><a href="#sdkPublicApi">Public API Reference</a></li>
+			    <li><a href="#sdkReleaseNotes">SDK Release Notes</a></li>
+
+			</ul>
+		    </li>
                 </ul>
             </nav>
         </aside>
