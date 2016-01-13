@@ -609,15 +609,15 @@ The SDK doesn’t cache predictions, it simply returns them to the parent app an
     }
 
     dependencies {
-        compile fileTree(dir: 'libs', include: ['*.jar'])
-        compile 'com.android.support:appcompat-v7:21.0.3'
-        compile (name:'kelvinsdk-onlinesdk-release-prod-0-6-0', ext:'aar')
-        compile 'org.apache.commons:commons-math3:3.3'
-        compile 'com.google.code.gson:gson:2.3.1'
-        compile 'com.github.zafarkhaja:java-semver:0.9.0'
-        compile 'com.koushikdutta.ion:ion:2.1.3'
-        compile 'com.google.android.gms:play-services-base:7.0.0'
-        compile 'com.google.android.gms:play-services-location:7.0.0'
+      compile fileTree(dir: 'libs', include: ['*.jar'])
+      compile 'com.android.support:appcompat-v7:21.0.3'
+      compile (name:'kelvinsdk-production-onlinesdk-release-0.8.0', ext:'aar')
+      compile 'org.apache.commons:commons-math3:3.3'
+      compile 'com.google.code.gson:gson:2.3.1'
+      compile 'com.github.zafarkhaja:java-semver:0.9.0'
+      compile 'com.koushikdutta.ion:ion:2.1.3'
+      compile 'com.google.android.gms:play-services-base:8.1.0'
+      compile 'com.google.android.gms:play-services-location:8.1.0'
     }
     {% endhighlight %}
   </li>
@@ -780,6 +780,15 @@ proguard file that will need to be specified to be used during your build:
     <h2 class="page-header">Release Notes</h2>
   <a class="headerlink" href="#sdkReleaseNotes"></a>
 </div>
+
+#### V0.8.0
+  * Added ability to disable statically registered broadcast receivers when SDK set to OFF mode
+  * Upgraded Google Play Services to version 8.1.0
+  * Fixed database upgrade bug
+  * Fixed database open call that didn't have matching close call
+
+#### V0.7.X
+  * Added new model for Galaxy S5 devices
 
 #### V0.6.0
   * Added Prediction Object to return results to parent app
